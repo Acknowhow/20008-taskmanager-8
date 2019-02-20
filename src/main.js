@@ -2049,34 +2049,37 @@ Here is a card with filled data</textarea
 
 ];
 
-const getFilterMarkup = (filterParams = {}) => {
+const getFilterMarkup = (filterParams) => {
+  const captionToLowerCase = filterParams.caption.toLowerCase();
+
   return `<input
           type="radio"
-          id="filter__${filterParams.caption.toLowerCase()}"
+          id="filter__${captionToLowerCase}"
           class="filter__input visually-hidden"
           name="filter"
-          ${filterParams.state ? ` ${filterParams.state}` : ``}
+          ${filterParams.state || ``}
         />
-        <label for="filter__${filterParams.caption.toLowerCase()}" class="filter__label">
+        <label for="filter__${captionToLowerCase}" class="filter__label">
           ${filterParams.caption.toUpperCase()} <span class="filter__all-count">${filterParams.amount}</span></label
         >`;
 };
 
 const getRandomIntInclusive = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  const minCeil = Math.ceil(min);
+  const maxFloor = Math.floor(max);
+
+  return Math.floor(Math.random() * (maxFloor - minCeil + 1)) + minCeil;
 };
 
-let randomNumber;
-
-filters.map((it) => section.insertAdjacentHTML(
-    `beforeend`, getFilterMarkup(
-        {caption: it.name, amount: it.amount, state: it.state})));
-
+for (const it of filters) {
+  section.insertAdjacentHTML(
+      `beforeend`, getFilterMarkup(
+          {caption: it.name, amount: it.amount, state: it.state}));
+}
 
 section.onclick = (e) => {
   const target = e.target;
+  let randomNumber;
 
   if (target.tagName.toUpperCase() === `LABEL`) {
     randomNumber = getRandomIntInclusive(0, articles.length - 1);
@@ -2088,5 +2091,4 @@ section.onclick = (e) => {
       randomNumber--;
     }
   }
-  return board;
 };
