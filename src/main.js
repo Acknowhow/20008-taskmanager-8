@@ -1,4 +1,3 @@
-'use strict';
 const section = document.querySelector(`.main__filter`);
 const board = document.querySelector(`.board__tasks`);
 
