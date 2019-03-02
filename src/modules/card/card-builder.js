@@ -1,15 +1,11 @@
-import {section} from '../filter/filter-builder';
-import {insert} from '../../helpers/insert';
-import {articles} from '../../data/data';
+import {insert} from '../../assets/factory/insert';
 
-const board = document.querySelector(`.board__tasks`);
-
-export default () => {
+export default (data, section, container) => {
   section.addEventListener(`click`, (e) => {
     const {target} = e;
 
     if (target.tagName.toUpperCase() === `LABEL`) {
-      insert(articles, board);
+      insert(data, container);
     }
   });
 };
