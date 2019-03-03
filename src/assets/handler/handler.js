@@ -5,6 +5,13 @@ export const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (maxFloor - minCeil + 1)) + minCeil;
 };
 
+export const getFutureDateWithinWeek = () => {
+  const timestamp = +Date.now()
+
+  return new Date(getRandomIntInclusive(
+      timestamp, timestamp + (7 * 24 * 60 * 60 * 1000)));
+}
+
 export const getDayAndMonth = (dateObject) => {
   return dateObject.toLocaleString(
       `en-GB`, {day: `numeric`, month: `long`});

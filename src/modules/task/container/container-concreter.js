@@ -1,6 +1,6 @@
-export default (color) => {
+export default (color, numValue) => {
   return `
-<article class="card card--${color}">
+<article class="card card--${color} card--${numValue}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -19,9 +19,7 @@ export default (color) => {
       </div>
   
       <div class="card__color-bar">
-        <svg width="100%" height="10">
-          <use xlink:href="#wave"></use>
-        </svg>
+
       </div>
   
   <!-- titleBuilder -->  
@@ -71,8 +69,8 @@ export default (color) => {
           </div>
         </div>
   
-  <!-- imgBuilder -->
-        <label class="card__img-wrap card__img-wrap--empty">
+  <!-- pictureBuilder -->
+        <label class="card__img-wrap">
   
         </label>
   
