@@ -9,4 +9,3 @@ export default (data, section, container) => {
     }
   });
 };
-

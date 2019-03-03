@@ -36,7 +36,7 @@ export const filters = [
   }
 ];
 
-export const articles = [
+export const tasks = [
   `<article class="card card--black">
             <form class="card__form" method="get">
               <div class="card__inner">
@@ -61,16 +61,9 @@ export const articles = [
                   </svg>
                 </div>
 
+            <!-- titleBuilder -->  
                 <div class="card__textarea-wrap">
-                  <label>
-                    <textarea
-                      class="card__text"
-                      placeholder="Start typing your text here..."
-                      name="text"
-                    >
-This is example of new task, you can add picture, set date and time, add tags.</textarea
-                    >
-                  </label>
+
                 </div>
 
                 <div class="card__settings">
@@ -80,110 +73,29 @@ This is example of new task, you can add picture, set date and time, add tags.</
                         date: <span class="card__date-status">no</span>
                       </button>
 
+            <!-- deadlineBuilder -->
                       <fieldset class="card__date-deadline" disabled>
-                        <label class="card__input-deadline-wrap">
-                          <input
-                            class="card__date"
-                            type="text"
-                            placeholder="23 September"
-                            name="date"
-                          />
-                        </label>
-                        <label class="card__input-deadline-wrap">
-                          <input
-                            class="card__time"
-                            type="text"
-                            placeholder="11:15 PM"
-                            name="time"
-                          />
-                        </label>
+
                       </fieldset>
 
                       <button class="card__repeat-toggle" type="button">
                         repeat:<span class="card__repeat-status">no</span>
                       </button>
 
+            <!-- dayBuilder -->                                
                       <fieldset class="card__repeat-days" disabled>
                         <div class="card__repeat-days-inner">
-                          <input
-                            class="visually-hidden card__repeat-day-input"
-                            type="checkbox"
-                            id="repeat-mo-1"
-                            name="repeat"
-                            value="mo"
-                          />
-                          <label class="card__repeat-day" for="repeat-mo-1"
-                            >mo</label
-                          >
-                          <input
-                            class="visually-hidden card__repeat-day-input"
-                            type="checkbox"
-                            id="repeat-tu-1"
-                            name="repeat"
-                            value="tu"
-                            checked
-                          />
-                          <label class="card__repeat-day" for="repeat-tu-1"
-                            >tu</label
-                          >
-                          <input
-                            class="visually-hidden card__repeat-day-input"
-                            type="checkbox"
-                            id="repeat-we-1"
-                            name="repeat"
-                            value="we"
-                          />
-                          <label class="card__repeat-day" for="repeat-we-1"
-                            >we</label
-                          >
-                          <input
-                            class="visually-hidden card__repeat-day-input"
-                            type="checkbox"
-                            id="repeat-th-1"
-                            name="repeat"
-                            value="th"
-                          />
-                          <label class="card__repeat-day" for="repeat-th-1"
-                            >th</label
-                          >
-                          <input
-                            class="visually-hidden card__repeat-day-input"
-                            type="checkbox"
-                            id="repeat-fr-1"
-                            name="repeat"
-                            value="fr"
-                            checked
-                          />
-                          <label class="card__repeat-day" for="repeat-fr-1"
-                            >fr</label
-                          >
-                          <input
-                            class="visually-hidden card__repeat-day-input"
-                            type="checkbox"
-                            name="repeat"
-                            value="sa"
-                            id="repeat-sa-1"
-                          />
-                          <label class="card__repeat-day" for="repeat-sa-1"
-                            >sa</label
-                          >
-                          <input
-                            class="visually-hidden card__repeat-day-input"
-                            type="checkbox"
-                            id="repeat-su-1"
-                            name="repeat"
-                            value="su"
-                            checked
-                          />
-                          <label class="card__repeat-day" for="repeat-su-1"
-                            >su</label
-                          >
+
                         </div>
                       </fieldset>
                     </div>
 
                     <div class="card__hashtag">
-                      <div class="card__hashtag-list"></div>
+                    
+            <!-- hashTagList -->        
+                      <div class="card__hashtag-list">
+                      
+                      </div>
 
                       <label>
                         <input
@@ -196,17 +108,9 @@ This is example of new task, you can add picture, set date and time, add tags.</
                     </div>
                   </div>
 
+            <!-- imgBuilder -->
                   <label class="card__img-wrap card__img-wrap--empty">
-                    <input
-                      type="file"
-                      class="card__img-input visually-hidden"
-                      name="img"
-                    />
-                    <img
-                      src="img/add-photo.svg"
-                      alt="task picture"
-                      class="card__img"
-                    />
+
                   </label>
 
                   <div class="card__colors-inner">
