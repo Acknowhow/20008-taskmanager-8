@@ -1,7 +1,7 @@
 import concreteDeadline from './deadline-concreter';
 
-import {getDayAndMonth} from '../../../assets/handler/handler';
-import {getTime} from '../../../assets/handler/handler';
+import {getDayAndMonth} from '../../../assets/handler';
+import {getTime} from '../../../assets/handler';
 
 export default (dueDate, container) => {
   const deadLineContainer = container.querySelector(

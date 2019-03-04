@@ -1,5 +1,5 @@
-import {task, filters} from '../../data/data';
-import {getRandomIntInclusive} from '../../assets/handler/handler';
+import {task, filters} from '../../data';
+import {getRandomIntInclusive} from '../../assets/handler';
 
 import buildFilter from '../filter/filter-builder';
 import buildContainer from './container/container-builder';

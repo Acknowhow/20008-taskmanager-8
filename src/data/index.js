@@ -1,4 +1,4 @@
-import {getFutureDateWithinWeek} from '../assets/handler/handler';
+import {getFutureDateWithinWeek} from '../assets/handler';
 
 const titles = [
   `Do your makeup`,

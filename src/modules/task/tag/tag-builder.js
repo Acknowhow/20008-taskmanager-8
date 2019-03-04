@@ -1,6 +1,6 @@
 import concreteTag from './tag-concreter';
 
-import {getRandomSlicedArray} from '../../../assets/handler/handler';
+import {getRandomSlicedArray} from '../../../assets/handler';
 
 export default (tags, container) => {
   const tagContainer = container.querySelector(`.card__hashtag-list`);

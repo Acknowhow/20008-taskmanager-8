@@ -1,5 +1,5 @@
 import concreteContainer from './container-concreter';
-import {getRandomArrayElement} from "../../../assets/handler/handler";
+import {getRandomArrayElement} from '../../../assets/handler';
 
 export default (colors, numValue, tasksContainer) => {
 

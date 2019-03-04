@@ -1,6 +1,6 @@
 import concreteTitle from './title-concreter';
 
-import {getRandomArrayElement} from '../../../assets/handler/handler';
+import {getRandomArrayElement} from '../../../assets/handler';
 
 export default (titles, container) => {
   const titleContainer = container.querySelector(
