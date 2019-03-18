@@ -34,10 +34,12 @@ export default () => {
 
       const getContainer = () => tasksContainer.appendChild(container.render());
 
-      factorize(task, getContainer, buildTitle,
-          buildDeadline, buildDay, buildTag, buildPicture,
-          buildColor);
+      const taskBuilders = [
+        buildTitle, buildDeadline, buildDay,
+        buildTag, buildPicture, buildColor
+      ];
 
+      factorize(task, getContainer, taskBuilders);
 
       container.onEdit = () => {
         containerEdit.render();
@@ -47,9 +49,7 @@ export default () => {
           return containerEdit.element;
         };
 
-        factorize(task, getReplacedContainer, buildTitle,
-            buildDeadline, buildDay, buildTag, buildPicture,
-            buildColor);
+        factorize(task, getReplacedContainer, taskBuilders);
 
         container.unrender();
       };
@@ -63,9 +63,7 @@ export default () => {
         };
 
 
-        factorize(task, getReplacedContainerEdit, buildTitle,
-            buildDeadline, buildDay, buildTag, buildPicture,
-            buildColor);
+        factorize(task, getReplacedContainerEdit, taskBuilders);
 
         containerEdit.unrender();
       };
