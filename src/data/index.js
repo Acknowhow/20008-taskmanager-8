@@ -31,7 +31,7 @@ export const task = {
   dueDate: getFutureDateWithinWeek(),
   days,
   tags,
-  picture() {
+  get picture() {
     return `http://picsum.photos/100/100?r=${Math.random()}`;
   },
   isFavorite: true,

@@ -2,7 +2,8 @@ import concreteTitle from './title-concreter';
 
 import {getRandomArrayElement} from '../../../assets/handler';
 
-export default (titles, container) => {
+export default (task, container) => {
+  const {titles} = task;
   const titleContainer = container.querySelector(
     `.card__textarea-wrap`)
 
