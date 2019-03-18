@@ -39,7 +39,7 @@ export default () => {
         buildTag, buildPicture, buildColor
       ];
 
-      factorize(task, getContainer, taskBuilders);
+      factorize(task, getContainer, ...taskBuilders);
 
       container.onEdit = () => {
         containerEdit.render();
@@ -49,7 +49,7 @@ export default () => {
           return containerEdit.element;
         };
 
-        factorize(task, getReplacedContainer, taskBuilders);
+        factorize(task, getReplacedContainer, ...taskBuilders);
 
         container.unrender();
       };
@@ -63,7 +63,7 @@ export default () => {
         };
 
 
-        factorize(task, getReplacedContainerEdit, taskBuilders);
+        factorize(task, getReplacedContainerEdit, ...taskBuilders);
 
         containerEdit.unrender();
       };

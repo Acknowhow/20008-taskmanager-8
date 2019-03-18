@@ -1,4 +1,4 @@
-export const factorize = (data, container, callbacks) => {
+export const factorize = (data, container, ...callbacks) => {
   const builtContainer = container();
 
   while (callbacks.length) {
