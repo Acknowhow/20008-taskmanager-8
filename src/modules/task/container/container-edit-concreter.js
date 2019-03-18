@@ -1,30 +1,31 @@
-export default class Container {
+export default class ContainerEdit {
   constructor(color) {
     this._color = color;
     this._element = null;
-    this._onEdit = null;
+    this._onSubmit = null;
 
-    this._onEditButtonClick = this._onEditButtonClick.bind(this);
+    this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
   }
 
-  _onEditButtonClick(e) {
+  _onSubmitButtonClick(e) {
     e.preventDefault();
 
-    if (typeof this._onEdit === `function`) {
-      this._onEdit();
+    if (typeof this._onSubmit === `function`) {
+      this._onSubmit();
     }
+  }
+
+  set onSubmit(fn) {
+    this._onSubmit = fn;
   }
 
   get element() {
     return this._element;
   }
 
-  set onEdit(fn) {
-    this._onEdit = fn;
-  }
-
   get template() {
-    return `<article class="card card--${this._color}">
+    return `
+      <article class="card card--edit card--${this._color}">
         <form class="card__form" method="POST" enctype="multipart/form-data">
           <div class="card__inner">
             <div class="card__control">
@@ -117,9 +118,10 @@ export default class Container {
       </article>`;
   }
 
+
   bind() {
-    this._element.querySelector(`.card__btn--edit`)
-      .addEventListener(`click`, this._onEditButtonClick);
+    this._element.querySelector(`.card__form`)
+      .addEventListener(`submit`, this._onSubmitButtonClick);
   }
 
   render() {
@@ -129,12 +131,11 @@ export default class Container {
     this._element = elementContainer.querySelector(`.card--${this._color}`);
     this.bind();
     return this._element;
-
   }
 
   unbind() {
-    this._element.querySelector(`.card__btn--edit`)
-      .removeEventListener(`click`, this._onEditButtonClick);
+    this.element.querySelector(`.card__form`)
+      .removeEventListener(`submit`, this._onSubmitButtonClick);
   }
 
   unrender() {

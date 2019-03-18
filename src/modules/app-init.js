@@ -1,6 +1,6 @@
-import bridgeTask from './task/task-bridge';
+import buildTask from './task/task-builder';
 
 export default () => {
-  bridgeTask();
+  buildTask();
 };
 
