@@ -1,5 +1,6 @@
 import {task, filters} from '../../data';
 import {getRandomIntInclusive} from '../../assets/handler';
+import {factorize} from '../../assets/factory';
 
 import buildFilter from '../filter/filter-builder';
 import buildContainer from './container/container-builder';
@@ -9,10 +10,6 @@ import buildDay from './day/day-builder';
 import buildTag from './tag/tag-builder';
 import buildPicture from './picture/picture-builder';
 import buildColor from './color/color-builder';
-
-const {
-  colors, titles, dueDate, days, tags, picture
-} = task;
 
 const filterContainer = document.querySelector(
   `.main__filter`);
@@ -34,15 +31,13 @@ export default () => {
 
       while (randomNumber >= 0) {
 
-        const taskContainer = buildContainer(
-          colors, randomNumber, tasksContainer);
+        const taskContainer = () => buildContainer(
+          task, randomNumber, tasksContainer);
 
-        buildTitle(titles, taskContainer);
-        buildDeadline(dueDate, taskContainer);
-        buildDay(days, taskContainer);
-        buildTag(tags, taskContainer);
-        buildPicture(picture(), taskContainer);
-        buildColor(colors, taskContainer);
+
+        factorize(task, taskContainer, buildTitle,
+          buildDeadline, buildDay, buildTag, buildPicture,
+          buildColor);
 
         randomNumber--;
       }

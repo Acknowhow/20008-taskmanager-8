@@ -1,6 +1,8 @@
 import concreteColor from './color-concreter';
 
-export default (colors, container) => {
+export default (task, container) => {
+  const {colors} = task;
+
   const colorContainer = container.querySelector(`.card__colors-wrap`)
   const colorsSet = new Set(colors);
 

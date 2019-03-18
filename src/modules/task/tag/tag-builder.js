@@ -2,7 +2,8 @@ import concreteTag from './tag-concreter';
 
 import {getRandomSlicedArray} from '../../../assets/handler';
 
-export default (tags, container) => {
+export default (task, container) => {
+  const {tags} = task;
   const tagContainer = container.querySelector(`.card__hashtag-list`);
   const randomSlicedTags = new Set(getRandomSlicedArray(tags));
 

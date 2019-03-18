@@ -3,7 +3,8 @@ import concreteDeadline from './deadline-concreter';
 import {getDayAndMonth} from '../../../assets/handler';
 import {getTime} from '../../../assets/handler';
 
-export default (dueDate, container) => {
+export default (task, container) => {
+  const {dueDate} = task;
   const deadLineContainer = container.querySelector(
     `.card__date-deadline`)
   const dayAndMonth = getDayAndMonth(dueDate);

@@ -1,9 +1,10 @@
 import concretePicture from './picture-concreter';
 
-export default (imageSrc, container) => {
+export default (task, container) => {
+  const {picture} = task;
   const pictureContainer = container.querySelector(`.card__img-wrap`)
 
   pictureContainer.insertAdjacentHTML(
-      `beforeend`, concretePicture(imageSrc));
+      `beforeend`, concretePicture(picture));
 };
 
