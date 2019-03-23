@@ -1,7 +1,9 @@
-export default class Container {
+import Component from '../../../assets/concreter';
+
+export default class Container extends Component {
   constructor(color) {
+    super();
     this._color = color;
-    this._element = null;
     this._onEdit = null;
 
     this._onEditButtonClick = this._onEditButtonClick.bind(this);
@@ -13,10 +15,6 @@ export default class Container {
     if (typeof this._onEdit === `function`) {
       this._onEdit();
     }
-  }
-
-  get element() {
-    return this._element;
   }
 
   set onEdit(fn) {
@@ -122,23 +120,8 @@ export default class Container {
       .addEventListener(`click`, this._onEditButtonClick);
   }
 
-  render() {
-    const elementContainer = document.createElement(`div`);
-    elementContainer.insertAdjacentHTML(`beforeend`, this.template);
-
-    this._element = elementContainer.querySelector(`.card--${this._color}`);
-    this.bind();
-    return this._element;
-
-  }
-
   unbind() {
     this._element.querySelector(`.card__btn--edit`)
       .removeEventListener(`click`, this._onEditButtonClick);
-  }
-
-  unrender() {
-    this.unbind();
-    this._element = null;
   }
 }
