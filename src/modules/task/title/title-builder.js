@@ -1,5 +1,4 @@
 import concreteTitle from './title-concreter';
-
 import {getRandomArrayElement} from '../../../assets/handler';
 
 export default (task, container) => {
@@ -11,5 +10,3 @@ export default (task, container) => {
   titleContainer.insertAdjacentHTML(
       `beforeend`, concreteTitle(randomTitle));
 };
-
-

@@ -29,7 +29,7 @@ export default class Container extends Component {
   }
 
   get template() {
-    return `<article class="card card--${this._color} ${this._isRepeated() ? `card--repeat` : ``}">
+    return `<article class="card ${Color[this._color]} ${this._isRepeated() ? `card--repeat` : ``}">
           <form class="card__form" method="POST" enctype="multipart/form-data">
             <div class="card__inner">
               <div class="card__control">
@@ -48,7 +48,9 @@ export default class Container extends Component {
               </div>
           
               <div class="card__color-bar">
-        
+                <svg class="card__color-bar-wave" width="100%" height="10">
+                    <use xlink:href="#wave"></use>
+                </svg>
               </div>
           
           <!-- titleBuilder -->  
@@ -59,20 +61,21 @@ export default class Container extends Component {
               <div class="card__settings">
                 <div class="card__details">
                   <div class="card__dates">
+               
+          <!-- deadlineBuilder -->        
                     <button class="card__date-deadline-toggle" type="button">
                       date: <span class="card__date-status">no</span>
                     </button>
           
-          <!-- deadlineBuilder -->
                     <fieldset class="card__date-deadline" disabled>
           
                     </fieldset>
           
+          <!-- dayBuilder -->
                     <button class="card__repeat-toggle" type="button">
                       repeat:<span class="card__repeat-status">no</span>
                     </button>
-          
-          <!-- dayBuilder -->                                
+                                          
                     <fieldset class="card__repeat-days" disabled>
                       <div class="card__repeat-days-inner">
           
