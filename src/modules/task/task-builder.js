@@ -1,4 +1,5 @@
 import {task, filters} from '../../data';
+
 import {getRandomArrayElement} from '../../assets/handler';
 import {factorize} from '../../assets/factory';
 
@@ -18,19 +19,20 @@ const filterContainer = document.querySelector(
 const tasksContainer = document.querySelector(
     `.board__tasks`);
 
+
 export default () => {
   buildFilter(filters, filterContainer);
+
   filterContainer.addEventListener(`click`, (e) => {
     const {target} = e;
 
-
     if (target.tagName.toUpperCase() === `LABEL`) {
 
-      const {colors} = task;
+      const {colors, days} = task;
       const randomColor = getRandomArrayElement([...new Set(colors)]);
 
-      const container = new Container(randomColor);
-      const containerEdit = new ContainerEdit(randomColor);
+      const container = new Container(randomColor, days);
+      const containerEdit = new ContainerEdit(randomColor, days);
 
       const getContainer = () => tasksContainer.appendChild(container.render());
 

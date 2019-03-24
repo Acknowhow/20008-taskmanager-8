@@ -1,11 +1,13 @@
 import Component from '../../../assets/concreter';
+import {Color} from '../../../data';
 
 export default class ContainerEdit extends Component {
-  constructor(color) {
+  constructor(color, days) {
     super();
     this._color = color;
-    this._onSubmit = null;
+    this._days = days;
 
+    this._onSubmit = null;
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
   }
 
@@ -17,13 +19,18 @@ export default class ContainerEdit extends Component {
     }
   }
 
+  _isRepeated() {
+    return Object.values(this._days)
+      .some((it) => it === true);
+  }
+
   set onSubmit(fn) {
     this._onSubmit = fn;
   }
 
   get template() {
     return `
-      <article class="card card--edit card--${this._color}">
+      <article class="card card--edit card--${this._color} ${this._isRepeated() ? `card--repeat` : ``}">
         <form class="card__form" method="POST" enctype="multipart/form-data">
           <div class="card__inner">
             <div class="card__control">
