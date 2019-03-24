@@ -37,7 +37,7 @@ export default () => {
       const getContainer = () => tasksContainer.appendChild(container.render());
 
       const taskBuilders = [
-        buildTitle, buildDeadline, buildDay,
+        buildDeadline, buildDay,
         buildTag, buildPicture, buildColor
       ];
 

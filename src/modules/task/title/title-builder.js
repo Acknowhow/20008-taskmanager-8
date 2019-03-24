@@ -9,4 +9,8 @@ export default (task, container) => {
   const randomTitle = getRandomArrayElement(titles);
   titleContainer.insertAdjacentHTML(
       `beforeend`, concreteTitle(randomTitle));
+
+  // const title = new Title(data);
+  // titleContainer.insertAdjacent(...)
+  // return title;
 };
