@@ -1,7 +1,9 @@
-export default class ContainerEdit {
+import Component from '../../../assets/concreter';
+
+export default class ContainerEdit extends Component {
   constructor(color) {
+    super();
     this._color = color;
-    this._element = null;
     this._onSubmit = null;
 
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
@@ -17,10 +19,6 @@ export default class ContainerEdit {
 
   set onSubmit(fn) {
     this._onSubmit = fn;
-  }
-
-  get element() {
-    return this._element;
   }
 
   get template() {
@@ -124,22 +122,9 @@ export default class ContainerEdit {
       .addEventListener(`submit`, this._onSubmitButtonClick);
   }
 
-  render() {
-    const elementContainer = document.createElement(`div`);
-    elementContainer.insertAdjacentHTML(`beforeend`, this.template);
-
-    this._element = elementContainer.querySelector(`.card--${this._color}`);
-    this.bind();
-    return this._element;
-  }
 
   unbind() {
     this.element.querySelector(`.card__form`)
       .removeEventListener(`submit`, this._onSubmitButtonClick);
-  }
-
-  unrender() {
-    this.unbind();
-    this._element = null;
   }
 }
