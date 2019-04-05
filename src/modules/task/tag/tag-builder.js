@@ -1,14 +1,14 @@
-import concreteTag from './tag-concreter';
+import Tag from './tag-concreter';
 
 import {getRandomSlicedArray} from '../../../assets/handler';
 
 export default (task, container) => {
   const {tags} = task;
-  const tagContainer = container.querySelector(`.card__hashtag-list`);
+  const tagContainer = container.querySelector(`.card__hashtag`);
   const randomSlicedTags = new Set(getRandomSlicedArray(tags));
 
-  for (const tag of randomSlicedTags) {
-    tagContainer.insertAdjacentHTML(
-        `beforeend`, concreteTag(tag));
-  }
+  const tag = new Tag(randomSlicedTags);
+  tagContainer.appendChild(tag.render());
+
+  return tag;
 };

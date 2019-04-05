@@ -37,8 +37,7 @@ export default () => {
       const getContainer = () => tasksContainer.appendChild(container.render());
 
       const taskBuilders = [
-        buildDeadline, buildDay,
-        buildTag, buildPicture, buildColor
+        buildTitle, buildDeadline, buildDay, buildTag
       ];
 
       factorize(task, getContainer, ...taskBuilders);

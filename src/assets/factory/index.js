@@ -10,8 +10,10 @@ export const factorize = (data, container, ...callbacks) => {
 
 export const createElement = (template) => {
   const elementContainer = document.createElement(`div`);
-  elementContainer.insertAdjacentHTML(`beforeend`, template);
+  const templateContainer = document.createElement(`template`);
+  templateContainer.innerHTML = template;
 
-  return elementContainer.firstElementChild;
+  elementContainer.appendChild(templateContainer.content);
 
+  return elementContainer;
 };

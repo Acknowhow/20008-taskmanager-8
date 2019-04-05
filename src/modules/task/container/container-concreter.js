@@ -29,7 +29,8 @@ export default class Container extends Component {
   }
 
   get template() {
-    return `<article class="card ${Color[this._color]} ${this._isRepeated() ? `card--repeat` : ``}">
+    return `  
+        <article class="card ${Color[this._color]} ${this._isRepeated() ? `card--repeat` : ``}">
           <form class="card__form" method="POST" enctype="multipart/form-data">
             <div class="card__inner">
               <div class="card__control">
@@ -61,43 +62,17 @@ export default class Container extends Component {
               <div class="card__settings">
                 <div class="card__details">
                   <div class="card__dates">
-               
+                  
           <!-- deadlineBuilder -->        
-                    <button class="card__date-deadline-toggle" type="button">
-                      date: <span class="card__date-status">no</span>
-                    </button>
-          
-                    <fieldset class="card__date-deadline" disabled>
-          
-                    </fieldset>
           
           <!-- dayBuilder -->
-                    <button class="card__repeat-toggle" type="button">
-                      repeat:<span class="card__repeat-status">no</span>
-                    </button>
-                                          
-                    <fieldset class="card__repeat-days" disabled>
-                      <div class="card__repeat-days-inner">
           
-                      </div>
-                    </fieldset>
                   </div>
           
                   <div class="card__hashtag">
                   
           <!-- tagBuilder -->        
-                    <div class="card__hashtag-list">
                     
-                    </div>
-          
-                    <label>
-                      <input
-                        type="text"
-                        class="card__hashtag-input"
-                        name="hashtag-input"
-                        placeholder="Type new hashtag here"
-                      />
-                    </label>
                   </div>
                 </div>
           

@@ -64,42 +64,15 @@ export default class ContainerEdit extends Component {
                 <div class="card__dates">
                 
         <!-- deadlineBuilder -->        
-                  <button class="card__date-deadline-toggle" type="button">
-                    date: <span class="card__date-status">no</span>
-                  </button>
-        
-                  <fieldset class="card__date-deadline" disabled>
-        
-                  </fieldset>
-        
+          
         <!-- dayBuilder -->
-                  <button class="card__repeat-toggle" type="button">
-                    repeat:<span class="card__repeat-status">no</span>
-                  </button>
-                                        
-                  <fieldset class="card__repeat-days" disabled>
-                    <div class="card__repeat-days-inner">
-        
-                    </div>
-                  </fieldset>
                   
                 </div>
         
                 <div class="card__hashtag">
                 
         <!-- tagBuilder -->        
-                  <div class="card__hashtag-list">
-                  
-                  </div>
-        
-                  <label>
-                    <input
-                      type="text"
-                      class="card__hashtag-input"
-                      name="hashtag-input"
-                      placeholder="Type new hashtag here"
-                    />
-                  </label>
+
                 </div>
               </div>
         
