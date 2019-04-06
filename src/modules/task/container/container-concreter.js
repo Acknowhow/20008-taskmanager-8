@@ -94,4 +94,9 @@ export default class Container extends Component {
     this._element.querySelector(`.card__btn--edit`)
       .removeEventListener(`click`, this._onEditButtonClick);
   }
+
+  update(data) {
+    this._days = data.days;
+    this._color = data.color;
+  }
 }

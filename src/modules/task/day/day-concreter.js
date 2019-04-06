@@ -22,16 +22,15 @@ export default class Day extends Component {
 
   _getDays() {
     const array = [];
-    for (const [key, value] of new Map(Object.entries(this._days))) {
-      const dayToLowerCase = key.toLowerCase();
+    for (const [key, value] of Object.entries(this._days)) {
       array.push(`
           <input 
             class="visually-hidden card__repeat-day-input" 
             type="checkbox" 
-            id="repeat-${dayToLowerCase}-1" 
-            name="repeat" value="${dayToLowerCase}" ${value === true ? `checked` : ``}/>
+            id="repeat-${key}-1" 
+            name="repeat" value="${key}" ${value === true ? `checked` : ``}/>
           <label class="card__repeat-day" 
-            for="repeat-${dayToLowerCase}-1">${dayToLowerCase}</label>`);
+            for="repeat-${key}-1">${key}</label>`);
     }
 
     return array;
@@ -56,5 +55,9 @@ export default class Day extends Component {
   unbind() {
     this._element.querySelector(`.card__repeat-toggle`)
       .removeEventListener(`click`, this._onChangeRepeated);
+  }
+
+  update(data) {
+    this._days = data.days;
   }
 }

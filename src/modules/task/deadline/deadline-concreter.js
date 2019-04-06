@@ -1,3 +1,5 @@
+import flatpickr from 'flatpickr';
+
 import Component from '../../../assets/concreter';
 
 export default class Deadline extends Component {
@@ -52,6 +54,12 @@ export default class Deadline extends Component {
   bind() {
     this._element.querySelector(`.card__date-deadline-toggle`)
       .addEventListener(`click`, this._onChangeDate);
+
+    if (this._state.isDate) {
+
+      flatpickr(`.card__date`, { altInput: true, altFormat: `j F`, dateFormat: `j F` });
+      flatpickr(`.card__time`, { enableTime: true, noCalendar: true, altInput: true, altFormat: `h:i K`, dateFormat: `h:i K`});
+    }
   }
 
   unbind() {
@@ -59,13 +67,3 @@ export default class Deadline extends Component {
       .removeEventListener(`click`, this._onChangeDate);
   }
 }
-
-
-
-
-
-
-
-// export default (dayAndMonth, time) => {
-//   return
-// };

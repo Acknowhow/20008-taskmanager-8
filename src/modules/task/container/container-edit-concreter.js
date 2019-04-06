@@ -31,6 +31,7 @@ export default class ContainerEdit extends Component {
     const taskEditMapper = ContainerEdit.createMapper(entry);
 
     for (const pair of formData.entries()) {
+      console.log(pair)
       const [property, value] = pair;
 
       if (taskEditMapper[property]) {

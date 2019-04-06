@@ -1,4 +1,4 @@
-import {getFutureDateWithinWeek} from '../assets/handler';
+import {getRandomArrayElement} from '../assets/handler';
 
 const titles = [
   `Do your makeup`,
@@ -15,13 +15,13 @@ const colors = [
 ];
 
 const days = {
-  'Mo': true,
-  'Tu': false,
-  'We': true,
-  'Th': false,
-  'Fr': false,
-  'Sa': true,
-  'Su': false
+  'mo': true,
+  'tu': false,
+  'we': true,
+  'th': false,
+  'fr': false,
+  'sa': true,
+  'su': false
 };
 
 export const Color = {
@@ -35,8 +35,10 @@ export const Color = {
 
 export const task = {
   colors,
+  color: getRandomArrayElement([...new Set(colors)]),
   titles,
-  dueDate: getFutureDateWithinWeek(),
+  title: getRandomArrayElement(titles),
+  dueDate: 1569268800000,
   days,
   tags,
   get picture() {

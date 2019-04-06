@@ -19,6 +19,16 @@ export const unrender = (...callbacks) => {
   }
 }
 
+export const update = (data, ...callbacks) => {
+  while (callbacks.length) {
+    const callback = callbacks.shift();
+
+    if (callback[update]) {
+      callback.update(data);
+    }
+  }
+}
+
 export const createElement = (template) => {
   const elementContainer = document.createElement(`div`);
   const templateContainer = document.createElement(`template`);

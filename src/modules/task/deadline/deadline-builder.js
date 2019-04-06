@@ -1,14 +1,14 @@
 import Deadline from './deadline-concreter';
+import moment from 'moment';
 
-import {getDayAndMonth} from '../../../assets/handler';
-import {getTime} from '../../../assets/handler';
 
 export default (task, container) => {
   const {dueDate} = task;
   const dateContainer = container.querySelector(
-    `.card__dates`)
-  const dayAndMonth = getDayAndMonth(dueDate);
-  const time = getTime(dueDate);
+    `.card__dates`);
+
+  const dayAndMonth = moment(dueDate).format(`DD MMMM`);
+  const time = moment(dueDate).format(`HH:mm`);
 
   const deadline = new Deadline(dayAndMonth, time);
   dateContainer.appendChild(deadline.render());

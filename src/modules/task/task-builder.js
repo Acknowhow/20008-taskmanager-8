@@ -1,7 +1,5 @@
 import {task, filters} from '../../data';
-
-import {getRandomArrayElement} from '../../assets/handler';
-import {manufacture, unrender} from '../../assets/factory';
+import {manufacture, unrender, update} from '../../assets/factory';
 
 import Container from './container/container-concreter';
 import ContainerEdit from './container/container-edit-concreter';
@@ -26,14 +24,13 @@ export default () => {
     const {target} = e;
 
     if (target.tagName.toUpperCase() === `LABEL`) {
-      let producedTaskBuilders;
-      let producedTaskEditBuilders;
+      let producedTaskBuilders = [];
+      let producedTaskEditBuilders = [];
 
-      const {colors, days} = task;
-      const randomColor = getRandomArrayElement([...new Set(colors)]);
+      const {color, days} = task;
 
-      const container = new Container(randomColor, days);
-      const containerEdit = new ContainerEdit(randomColor, days);
+      const container = new Container(color, days);
+      const containerEdit = new ContainerEdit(color, days);
 
       const getContainer = () => tasksContainer.appendChild(container.render());
 
@@ -64,7 +61,14 @@ export default () => {
       };
 
       containerEdit.onSubmit = (newData) => {
+        task.title = newData.title;
+        task.days = newData.days;
+        task.color = newData.color;
 
+        update(task, ...producedTaskBuilders);
+        update(task, ...producedTaskEditBuilders);
+        container.update(task);
+        containerEdit.update(task);
         container.render();
 
         const getReplacedContainerEdit = () => {
