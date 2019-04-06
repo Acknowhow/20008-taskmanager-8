@@ -61,13 +61,6 @@ export default class Container extends Component {
           
               <div class="card__settings">
                 <div class="card__details">
-                  <div class="card__dates">
-                  
-          <!-- deadlineBuilder -->        
-          
-          <!-- dayBuilder -->
-          
-                  </div>
           
                   <div class="card__hashtag">
                   
@@ -80,15 +73,7 @@ export default class Container extends Component {
                 <label class="card__img-wrap">
           
                 </label>
-          
-                <div class="card__colors-inner">
-                  <h3 class="card__colors-title">Color</h3>
-                  
-          <!-- colorBuilder -->        
-                  <div class="card__colors-wrap">
-        
-                  </div>
-                </div>
+                
               </div>
           
               <div class="card__status-btns">

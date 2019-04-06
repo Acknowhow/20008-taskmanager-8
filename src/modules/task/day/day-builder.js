@@ -5,9 +5,8 @@ export default (task, container) => {
 
   const dateContainer = container.querySelector(
     `.card__dates`);
-  const daysMap = new Map(Object.entries(days));
 
-  const day = new Day(daysMap);
+  const day = new Day(days);
   dateContainer.appendChild(day.render());
 
   return day;

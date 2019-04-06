@@ -22,7 +22,7 @@ export default class Day extends Component {
 
   _getDays() {
     const array = [];
-    for (const [key, value] of this._days) {
+    for (const [key, value] of new Map(Object.entries(this._days))) {
       const dayToLowerCase = key.toLowerCase();
       array.push(`
           <input 

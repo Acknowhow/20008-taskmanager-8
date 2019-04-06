@@ -15,4 +15,8 @@ export default class Title extends Component {
             name="text">${this._title}</textarea>
         </label>`;
   }
+
+  update(data) {
+    this._title = data.title;
+  }
 };
