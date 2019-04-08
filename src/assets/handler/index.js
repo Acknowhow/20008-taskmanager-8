@@ -27,5 +27,5 @@ export const getRandomArrayElement = (array) => {
 };
 
 export const getRandomSlicedArray = (tags) => {
-  return tags.slice(0, getRandomIntInclusive(0, tags.length));
+  return tags.slice(0, getRandomIntInclusive(1, tags.length));
 };

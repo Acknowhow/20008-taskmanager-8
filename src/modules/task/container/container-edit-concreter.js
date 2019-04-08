@@ -1,20 +1,62 @@
 import Component from '../../../assets/concreter';
+import {Color} from '../../../data';
 
 export default class ContainerEdit extends Component {
-  constructor(color) {
+  constructor(color, days) {
     super();
     this._color = color;
-    this._onSubmit = null;
+    this._days = days;
 
+    this._onSubmit = null;
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
+  }
+
+  _processForm(formData) {
+    const entry = {
+      title: ``,
+      color: ``,
+      tags: new Set(),
+      dueDate: new Date(),
+      days: {
+        'mo': false,
+        'tu': false,
+        'we': false,
+        'th': false,
+        'fr': false,
+        'sa': false,
+        'su': false
+      }
+    };
+
+    const taskEditMapper = ContainerEdit.createMapper(entry);
+
+    for (const pair of formData.entries()) {
+      console.log(pair)
+      const [property, value] = pair;
+
+      if (taskEditMapper[property]) {
+        taskEditMapper[property](value);
+      }
+    }
+
+    return entry;
   }
 
   _onSubmitButtonClick(e) {
     e.preventDefault();
 
+    const formData = new FormData(
+      this._element.querySelector(`.card__form`));
+    const newData = this._processForm(formData);
+
     if (typeof this._onSubmit === `function`) {
-      this._onSubmit();
+      this._onSubmit(newData);
     }
+  }
+
+  _isRepeated() {
+    return Object.values(this._days)
+      .some((it) => it === true);
   }
 
   set onSubmit(fn) {
@@ -23,7 +65,7 @@ export default class ContainerEdit extends Component {
 
   get template() {
     return `
-      <article class="card card--edit card--${this._color}">
+      <article class="card card--edit ${Color[this._color]} ${this._isRepeated() ? `card--repeat` : ``}">
         <form class="card__form" method="POST" enctype="multipart/form-data">
           <div class="card__inner">
             <div class="card__control">
@@ -42,7 +84,9 @@ export default class ContainerEdit extends Component {
             </div>
         
             <div class="card__color-bar">
-      
+              <svg class="card__color-bar-wave" width="100%" height="10">
+                <use xlink:href="#wave"></use>
+              </svg>
             </div>
         
         <!-- titleBuilder -->  
@@ -53,42 +97,17 @@ export default class ContainerEdit extends Component {
             <div class="card__settings">
               <div class="card__details">
                 <div class="card__dates">
-                  <button class="card__date-deadline-toggle" type="button">
-                    date: <span class="card__date-status">no</span>
-                  </button>
-        
-        <!-- deadlineBuilder -->
-                  <fieldset class="card__date-deadline" disabled>
-        
-                  </fieldset>
-        
-                  <button class="card__repeat-toggle" type="button">
-                    repeat:<span class="card__repeat-status">no</span>
-                  </button>
-        
-        <!-- dayBuilder -->                                
-                  <fieldset class="card__repeat-days" disabled>
-                    <div class="card__repeat-days-inner">
-        
-                    </div>
-                  </fieldset>
+                
+        <!-- deadlineBuilder -->        
+          
+        <!-- dayBuilder -->
+                  
                 </div>
         
                 <div class="card__hashtag">
                 
         <!-- tagBuilder -->        
-                  <div class="card__hashtag-list">
-                  
-                  </div>
-        
-                  <label>
-                    <input
-                      type="text"
-                      class="card__hashtag-input"
-                      name="hashtag-input"
-                      placeholder="Type new hashtag here"
-                    />
-                  </label>
+
                 </div>
               </div>
         
@@ -96,16 +115,13 @@ export default class ContainerEdit extends Component {
               <label class="card__img-wrap">
         
               </label>
-        
+              
+        <!-- colorBuilder -->
               <div class="card__colors-inner">
-                <h3 class="card__colors-title">Color</h3>
-                
-        <!-- colorBuilder -->        
-                <div class="card__colors-wrap">
+
       
                 </div>
               </div>
-            </div>
         
             <div class="card__status-btns">
               <button class="card__save" type="submit">save</button>
@@ -126,5 +142,20 @@ export default class ContainerEdit extends Component {
   unbind() {
     this.element.querySelector(`.card__form`)
       .removeEventListener(`submit`, this._onSubmitButtonClick);
+  }
+
+  update(data) {
+    this._color = data.color;
+    this._days = data.days;
+  }
+
+  static createMapper(target) {
+    return {
+      hashtag: (value) => target.tags.add(value),
+      text: (value) => target.title = value,
+      color: (value) => target.color = value,
+      repeat: (value) => target.days[value] = true,
+      date: (value) => target.dueDate = value,
+    }
   }
 }

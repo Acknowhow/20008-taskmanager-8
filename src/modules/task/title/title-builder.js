@@ -1,15 +1,12 @@
-import concreteTitle from './title-concreter';
-
-import {getRandomArrayElement} from '../../../assets/handler';
+import Title from './title-concreter';
 
 export default (task, container) => {
-  const {titles} = task;
+  const {title} = task;
   const titleContainer = container.querySelector(
-    `.card__textarea-wrap`)
+      `.card__textarea-wrap`);
 
-  const randomTitle = getRandomArrayElement(titles);
-  titleContainer.insertAdjacentHTML(
-      `beforeend`, concreteTitle(randomTitle));
+  const titleConcrete = new Title(title);
+
+  titleContainer.appendChild(titleConcrete.render());
+  return titleConcrete;
 };
-
-

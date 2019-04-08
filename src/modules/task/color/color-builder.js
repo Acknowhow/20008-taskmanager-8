@@ -1,13 +1,11 @@
-import concreteColor from './color-concreter';
+import Color from './color-concreter';
 
 export default (task, container) => {
   const {colors} = task;
+  const colorContainer = container.querySelector(`.card__colors-inner`)
 
-  const colorContainer = container.querySelector(`.card__colors-wrap`)
-  const colorsSet = new Set(colors);
+  const color = new Color(colors);
+  colorContainer.appendChild(color.render());
 
-  for (const color of colorsSet) {
-    colorContainer.insertAdjacentHTML(
-        `beforeend`, concreteColor(color));
-  }
+  return color;
 };
