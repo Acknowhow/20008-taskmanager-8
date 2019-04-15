@@ -1,4 +1,4 @@
-import {task, filters} from '../../data';
+import {tasks, filters} from '../../data';
 import {manufacture, unrender, update} from '../../assets/factory';
 
 import Container from './container/container-concreter';
@@ -20,10 +20,13 @@ const tasksContainer = document.querySelector(
 export default () => {
   buildFilter(filters, filterContainer);
 
-  filterContainer.addEventListener(`click`, (e) => {
-    const {target} = e;
+  const renderTasks = () => {
+    const filteredTasks = tasks.filter((it) => it.isDeleted !== true);
+    tasksContainer.innerHTML = ``;
 
-    if (target.tagName.toUpperCase() === `LABEL`) {
+    for (let i = 0; i < filteredTasks.length; i++) {
+      const task = filteredTasks[i];
+
       let producedTaskBuilders = [];
       let producedTaskEditBuilders = [];
 
@@ -32,7 +35,8 @@ export default () => {
       const container = new Container(color, days);
       const containerEdit = new ContainerEdit(color, days);
 
-      const getContainer = () => tasksContainer.appendChild(container.render());
+      const getContainer = () =>
+        tasksContainer.appendChild(container.render());
 
       const taskBuilders = [
         buildTitle, buildTag, buildPicture
@@ -43,7 +47,7 @@ export default () => {
         buildPicture, buildColor
       ];
 
-      producedTaskBuilders = manufacture(task, getContainer, ...taskBuilders);
+      producedTaskBuilders = manufacture(task, getContainer, i, ...taskBuilders);
 
       container.onEdit = () => {
         containerEdit.render();
@@ -54,10 +58,15 @@ export default () => {
         };
 
         producedTaskEditBuilders = manufacture(
-            task, getReplacedContainer, ...taskEditBuilders);
+          task, getReplacedContainer, i, ...taskEditBuilders);
 
         unrender(...producedTaskBuilders);
         container.unrender();
+      };
+
+      containerEdit.onDelete = () => {
+        task.isDeleted = true;
+        renderTasks();
       };
 
       containerEdit.onSubmit = (newData) => {
@@ -77,13 +86,14 @@ export default () => {
         };
 
         producedTaskBuilders = manufacture(
-            task, getReplacedContainerEdit, ...taskBuilders);
+          task, getReplacedContainerEdit, i, ...taskBuilders);
 
         unrender(...producedTaskEditBuilders);
         containerEdit.unrender();
       };
     }
-  });
+  };
+  renderTasks();
 };
 
 

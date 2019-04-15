@@ -1,7 +1,6 @@
 import Deadline from './deadline-concreter';
 import moment from 'moment';
 
-
 export default (task, container) => {
   const {dueDate} = task;
   const dateContainer = container.querySelector(

@@ -3,16 +3,16 @@ import {getRandomArrayElement} from '../assets/handler';
 const titles = [
   `Do your makeup`,
   `Recitation time`,
-  `Role rehearsal`
+  `Role rehearsal`,
+  `It's showtime`
 ];
 
 const tags = [
   `horror`, `comedy`, `melodramatic`, `fiction`, `documental`
 ];
 
-const colors = [
-  `black`, `yellow`, `blue`, `green`, `pink`
-];
+export const colors = new Set([`black`, `yellow`, `blue`, `green`, `pink`]);
+
 
 const days = {
   'mo': true,
@@ -33,20 +33,52 @@ export const Color = {
 };
 
 
-export const task = {
-  colors,
-  color: getRandomArrayElement([...new Set(colors)]),
-  titles,
-  title: getRandomArrayElement(titles),
-  dueDate: 1569268800000,
-  days,
-  tags,
-  get picture() {
-    return `http://picsum.photos/100/100?r=${Math.random()}`;
+export const tasks = [
+  {
+    color: [...colors][0],
+    title: titles[0],
+    dueDate: 1569268800000,
+    days,
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
   },
-  isFavorite: true,
-  isDone: true
-};
+  {
+    colors,
+    color: [...colors][1],
+    titles,
+    title: getRandomArrayElement(titles),
+    dueDate: 1571778000000,
+    days,
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+  },
+  {
+    colors,
+    color: [...colors][2],
+    titles,
+    title: getRandomArrayElement(titles),
+    dueDate: 1574456400000,
+    days,
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+  }
+];
 
 
 export const filters = [

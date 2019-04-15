@@ -1,11 +1,12 @@
 import Color from './color-concreter';
 
-export default (task, container) => {
-  const {colors} = task;
+export default (task, container, index) => {
+  const {color} = task;
+
   const colorContainer = container.querySelector(`.card__colors-inner`)
 
-  const color = new Color(colors);
-  colorContainer.appendChild(color.render());
+  const colorConcrete = new Color(color, index);
+  colorContainer.appendChild(colorConcrete.render());
 
-  return color;
+  return colorConcrete;
 };
