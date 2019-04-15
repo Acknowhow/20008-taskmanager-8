@@ -1,5 +1,6 @@
 import {tasks, filters} from '../../data';
 import {manufacture, unrender, update} from '../../assets/factory';
+import {countFilters} from '../../assets/handler';
 
 import Container from './container/container-concreter';
 import ContainerEdit from './container/container-edit-concreter';
@@ -19,6 +20,8 @@ const tasksContainer = document.querySelector(
 
 export default () => {
   buildFilter(filters, filterContainer);
+
+
 
   const renderTasks = () => {
     const filteredTasks = tasks.filter((it) => it.isDeleted !== true);

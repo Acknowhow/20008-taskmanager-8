@@ -35,5 +35,5 @@ export const createElement = (template) => {
 
   elementContainer.appendChild(templateContainer.content);
 
-  return elementContainer;
+  return elementContainer.firstElementChild;
 };

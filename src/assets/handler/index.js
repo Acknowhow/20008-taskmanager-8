@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const getRandomIntInclusive = (min, max) => {
   const minCeil = Math.ceil(min);
   const maxFloor = Math.floor(max);
@@ -28,4 +30,27 @@ export const getRandomArrayElement = (array) => {
 
 export const getRandomSlicedArray = (tags) => {
   return tags.slice(0, getRandomIntInclusive(1, tags.length));
+};
+
+export const countFilters = (tasks, filterName) => {
+  switch (filterName) {
+
+    case `all`:
+      return tasks;
+
+    case `overdue`:
+      return tasks.filter((it) => it.dueDate < Date.now());
+
+    case `today`:
+      return tasks.filter((it) => {
+        const startOfDay = moment().startOf('day').format('x');
+        const endOfDay = moment.endOf('day').format('x');
+
+        return it.dueDate >= startOfDay && it.dueDate <= endOfDay;
+      });
+
+    case `repeating`:
+      return tasks.filter((it) =>
+        [...Object.entries(it.repeatingDays)].some((rec) => rec[1]))
+  }
 };

@@ -35,6 +35,34 @@ export const Color = {
 
 export const tasks = [
   {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1537650000000,
+    days,
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1537650000000,
+    days,
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
     color: [...colors][0],
     title: titles[0],
     dueDate: 1569268800000,
