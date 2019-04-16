@@ -38,8 +38,10 @@ export default class Color extends Component {
 
   get template() {
     return `
-      <h3 class="card__colors-title">Color</h3>
-      <div class="card__colors-wrap">${this._getColors().join(``)}</div>`;
+      <div>
+        <h3 class="card__colors-title">Color</h3>
+        <div class="card__colors-wrap">${this._getColors().join(``)}</div>
+      </div>`;
   }
 
   bind() {

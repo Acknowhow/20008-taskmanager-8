@@ -9,13 +9,15 @@ export default class Picture extends Component {
 
   get template() {
     return `
-      <input
-        type="file"
-        class="card__img-input visually-hidden"
-        name="img"/>
-      <img
-        src="${this._src}"
-        alt="task picture"
-        class="card__img"/>`
+      <div>
+        <input
+          type="file"
+          class="card__img-input visually-hidden"
+          name="img"/>
+        <img
+          src="${this._src}"
+          alt="task picture"
+          class="card__img"/>
+      </div>`
   }
 }

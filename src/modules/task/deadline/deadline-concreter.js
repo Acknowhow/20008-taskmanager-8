@@ -25,6 +25,7 @@ export default class Deadline extends Component {
 
   get template() {
     return `
+        <div>
           <button class="card__date-deadline-toggle" type="button">
             date: <span class="card__date-status">${this._state.isDate ? `yes` : `no`}</span>
           </button>
@@ -48,7 +49,8 @@ export default class Deadline extends Component {
               />
             </label>
   
-          </fieldset>`;
+          </fieldset>
+        </div>`;
   }
 
   bind() {

@@ -9,6 +9,6 @@ export default (filterParams) => {
           ${filterParams.state || ``}
         />
         <label for="filter__${captionToLowerCase}" class="filter__label">
-          ${filterParams.caption.toUpperCase()} <span class="filter__all-count">${filterParams.amount}</span></label
+          ${filterParams.caption.toUpperCase()} <span class="filter__all-count">${filterParams.count}</span></label
         >`;
 };

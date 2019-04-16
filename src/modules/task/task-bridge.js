@@ -1,6 +1,6 @@
 import {tasks, filters} from '../../data';
 import {manufacture, unrender, update} from '../../assets/factory';
-import {countFilters} from '../../assets/handler';
+import {getFiltersState} from '../../assets/handler';
 
 import Container from './container/container-concreter';
 import ContainerEdit from './container/container-edit-concreter';
@@ -13,15 +13,14 @@ import buildTag from './tag/tag-builder';
 import buildPicture from './picture/picture-builder';
 import buildColor from './color/color-builder';
 
-const filterContainer = document.querySelector(
-    `.main__filter`);
+const searchContainer = document.querySelector(
+    `.main__search`);
 const tasksContainer = document.querySelector(
     `.board__tasks`);
 
 export default () => {
-  buildFilter(filters, filterContainer);
 
-
+  buildFilter(getFiltersState(tasks, filters), searchContainer);
 
   const renderTasks = () => {
     const filteredTasks = tasks.filter((it) => it.isDeleted !== true);
