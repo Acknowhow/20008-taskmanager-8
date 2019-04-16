@@ -12,4 +12,6 @@ export default (filters, container) => {
         `beforeend`, getLabelConcrete(
             {caption: it.name, count: it.count, state: it.state}));
   }
+
+  return filterContainer;
 };

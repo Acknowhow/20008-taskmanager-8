@@ -51,7 +51,7 @@ const getRepeatingTasks = (tasks) => {
   });
 };
 
-export const countFilters = (tasks, filterName) => {
+export const getFilteredTasks = (tasks, filterName) => {
   const filterNameToLowerCase = filterName.toLowerCase();
 
   switch (filterNameToLowerCase) {

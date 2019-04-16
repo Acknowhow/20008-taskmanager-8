@@ -1,10 +1,7 @@
-import {tasks, filters} from '../../data';
 import {manufacture, unrender, update} from '../../assets/factory';
-import {getFiltersState} from '../../assets/handler';
 
 import Container from './container/container-concreter';
 import ContainerEdit from './container/container-edit-concreter';
-import buildFilter from '../filter/filter-builder';
 
 import buildTitle from './title/title-builder';
 import buildDeadline from './deadline/deadline-builder';
@@ -13,21 +10,17 @@ import buildTag from './tag/tag-builder';
 import buildPicture from './picture/picture-builder';
 import buildColor from './color/color-builder';
 
-const searchContainer = document.querySelector(
-    `.main__search`);
 const tasksContainer = document.querySelector(
-    `.board__tasks`);
+  `.board__tasks`);
 
-export default () => {
-
-  buildFilter(getFiltersState(tasks, filters), searchContainer);
+export default (filteredTasks) => {
 
   const renderTasks = () => {
-    const filteredTasks = tasks.filter((it) => it.isDeleted !== true);
+    const activeTasks = filteredTasks.filter((it) => it.isDeleted !== true);
     tasksContainer.innerHTML = ``;
 
-    for (let i = 0; i < filteredTasks.length; i++) {
-      const task = filteredTasks[i];
+    for (let i = 0; i < activeTasks.length; i++) {
+      const task = activeTasks[i];
 
       let producedTaskBuilders = [];
       let producedTaskEditBuilders = [];
@@ -60,7 +53,7 @@ export default () => {
         };
 
         producedTaskEditBuilders = manufacture(
-          task, getReplacedContainer, i, ...taskEditBuilders);
+              task, getReplacedContainer, i, ...taskEditBuilders);
 
         unrender(...producedTaskBuilders);
         container.unrender();
@@ -95,6 +88,7 @@ export default () => {
       };
     }
   };
+
   renderTasks();
 };
 
