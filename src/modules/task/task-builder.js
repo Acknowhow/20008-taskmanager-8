@@ -3,7 +3,8 @@ import {daysChart, tagsChart, colorChart} from '../../assets/chart';
 import {tasks, filters} from '../../data';
 import {getFilteredTasks, getFiltersState} from '../../assets/handler';
 
-import buildFilter from '../filter/filter-builder';
+import buildFilterContainer from '../filter/container/container-builder';
+
 import bridgeTask from './task-bridge';
 
 const searchContainer = document.querySelector(
@@ -40,7 +41,6 @@ export default () => {
       const dateEnd = target.value.substring(14, 24);
 
       console.log(dateStart);
-
     }
   });
 
@@ -59,12 +59,13 @@ export default () => {
       }
     }
   });
-  const filterContainer = buildFilter(
-      getFiltersState(tasks, filters), searchContainer);
+
+  const getActiveTasks = () => tasks.filter((it) => it.isDeleted !== true);
+
+  const filterContainer = buildFilterContainer(searchContainer,
+    getFiltersState(getActiveTasks(), filters));
 
   filterContainer.onFilter = (target) => {
-
-    // filterContainerUpdate
 
     if (board.classList.contains(`visually-hidden`)) {
       board.classList.remove(`visually-hidden`);
@@ -74,9 +75,9 @@ export default () => {
       statistic.classList.add(`visually-hidden`);
     }
 
-    const filteredTasks = getFilteredTasks(tasks, target);
+    filterContainer.update(getFiltersState(getActiveTasks(), filters), target);
 
-    bridgeTask(filteredTasks);
+    bridgeTask(getFilteredTasks(getActiveTasks(), target));
   };
 };
 

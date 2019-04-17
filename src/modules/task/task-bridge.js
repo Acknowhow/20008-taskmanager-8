@@ -16,8 +16,9 @@ const tasksContainer = document.querySelector(
 export default (filteredTasks) => {
 
   const renderTasks = () => {
-    const activeTasks = filteredTasks.filter((it) => it.isDeleted !== true);
     tasksContainer.innerHTML = ``;
+
+    const activeTasks = filteredTasks.filter((it) => it.isDeleted !== true);
 
     for (let i = 0; i < activeTasks.length; i++) {
       const task = activeTasks[i];
@@ -61,6 +62,7 @@ export default (filteredTasks) => {
 
       containerEdit.onDelete = () => {
         task.isDeleted = true;
+
         renderTasks();
       };
 

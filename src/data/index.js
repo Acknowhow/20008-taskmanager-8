@@ -317,9 +317,7 @@ export const tasks = [
 
   },
   {
-    colors,
     color: [...colors][1],
-    titles,
     title: getRandomArrayElement(titles),
     dueDate: 1571778000000,
     days: {
@@ -340,9 +338,7 @@ export const tasks = [
     isDeleted: false
   },
   {
-    colors,
     color: [...colors][2],
-    titles,
     title: getRandomArrayElement(titles),
     dueDate: 1574456400000,
     days: {

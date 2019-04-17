@@ -2,9 +2,10 @@ import {Filter} from '../../../data';
 import Component from '../../../assets/concreter';
 
 export default class Container extends Component {
-  constructor() {
+  constructor(filters) {
     super();
 
+    this._filters = filters;
     this._onFilter = null;
     this._onFilterButtonClick = this._onFilterButtonClick.bind(this);
   }
@@ -18,7 +19,30 @@ export default class Container extends Component {
 
       const filterValue = target.attributes[`for`].nodeValue;
       this._onFilter(Filter[filterValue]);
+
     }
+  }
+
+  _partialUpdate() {
+    this._element.innerHTML = this.template;
+  }
+
+  _getFilters() {
+    return this._filters.map((it) => {
+
+      const nameToLowerCase = it.name.toLowerCase();
+
+      return `<input
+          type="radio"
+          id="filter__${nameToLowerCase}"
+          class="filter__input visually-hidden"
+          name="filter"
+          ${it.state || ``}
+        />
+        <label for="filter__${nameToLowerCase}" class="filter__label">
+          ${it.name.toUpperCase()} <span class="filter__all-count">${it.count}</span></label
+        >`;
+    })
   }
 
   set onFilter(fn) {
@@ -27,8 +51,7 @@ export default class Container extends Component {
 
   get template() {
     return `
-      <section class="main__filter filter container">
-      </section>`;
+      <section class="main__filter filter container">${this._getFilters().join(``)}</section>`;
   }
 
   bind() {
@@ -37,5 +60,13 @@ export default class Container extends Component {
 
   unbind() {
     this._element.removeEventListener(`click`, this._onFilterButtonClick);
+  }
+
+  update(filters) {
+    this._filters = filters;
+
+    this.unbind();
+    this._partialUpdate();
+    this.bind();
   }
 }
