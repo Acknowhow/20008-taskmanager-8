@@ -60,7 +60,8 @@ export default class Deadline extends Component {
     if (this._state.isDate) {
 
       flatpickr(`.card__date`, { altInput: true, altFormat: `j F`, dateFormat: `j F` });
-      flatpickr(`.card__time`, { enableTime: true, noCalendar: true, altInput: true, altFormat: `h:i K`, dateFormat: `h:i K`});
+      flatpickr(`.card__time`, { enableTime: true, noCalendar: true, altInput: true,
+        altFormat: `h:i K`, dateFormat: `h:i K`});
     }
   }
 

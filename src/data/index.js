@@ -31,6 +31,226 @@ export const Filter = {
 
 export const tasks = [
   {
+    color: [...colors][2],
+    title: titles[0],
+    dueDate: 1555275600000,
+    days: {
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false
+    },
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1555275600500,
+    days: {
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false
+    },
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1555275610000,
+    days: {
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false
+    },
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1555362010000,
+    days: {
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false
+    },
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1555362020000,
+    days: {
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false
+    },
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1555448400000,
+    days: {
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false
+    },
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1555448400000,
+    days: {
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false
+    },
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1555534800000,
+    days: {
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false
+    },
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1555534800000,
+    days: {
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false
+    },
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
+    color: [...colors][4],
+    title: titles[0],
+    dueDate: 1555621200000,
+    days: {
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false
+    },
+    tags,
+    get picture() {
+      return `http://picsum.photos/100/100?r=${Math.random()}`;
+    },
+    isFavorite: true,
+    isDone: true,
+    isDeleted: false
+
+  },
+  {
     color: [...colors][4],
     title: titles[0],
     dueDate: 1537650000000,

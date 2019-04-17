@@ -7,21 +7,31 @@ export const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (maxFloor - minCeil + 1)) + minCeil;
 };
 
-export const getFutureDateWithinWeek = () => {
-  const timestamp = +Date.now()
+const getCurrentWeekDays = () => {
+  const weekStart = moment().startOf('week');
+  const weekEnd = moment().endOf('week').add(1, 'millisecond');
 
-  return new Date(getRandomIntInclusive(
-      timestamp, timestamp + (7 * 24 * 60 * 60 * 1000)));
-}
+  const days = weekEnd.diff(weekStart, 'days');
+  const array = [];
 
-export const getDayAndMonth = (dateObject) => {
-  return dateObject.toLocaleString(
-      `en-GB`, {day: `numeric`, month: `long`});
+  for (let i = 1; i <= days; i++) {
+    array.push(weekStart.day(i).format('D MMM'));
+  }
+  return array;
 };
 
-export const getTime = (dateObject) => {
-  return dateObject.toLocaleString(
-      `en-GB`, {hour: `numeric`, minute: `numeric`, hour12: `true`});
+const getDays = (dateStart, dateEnd) => {
+  const dateStartDay = moment(dateStart).startOf('day');
+  const dateEndDay = moment(dateEnd).endOf('day').add(1, 'millisecond');
+  const days = dateEndDay.diff(dateStartDay, 'days');
+
+  const array = [];
+
+  for (let i = 1; i <= days; i++) {
+    array.push(dateStartDay.day(i).format('D MMM'));
+  }
+
+  return array;
 };
 
 export const getRandomArrayElement = (array) => {

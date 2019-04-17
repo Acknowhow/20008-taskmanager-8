@@ -7,6 +7,7 @@
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="css/Chart.css" />
     <link rel="stylesheet" href="css/flatpickr.css" />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -44,7 +45,6 @@
             name="control"
             id="control__task"
             class="control__input visually-hidden"
-            checked
           />
           <label for="control__task" class="control__label">TASKS</label>
           <input
@@ -103,16 +103,16 @@
               <span class="statistic__task-found">0</span> tasks were fulfilled.
             </p>
           </div>
-          <div class="statistic__line-graphic visually-hidden">
+          <div class="statistic__line-graphic">
             <canvas class="statistic__days" width="550" height="150"></canvas>
           </div>
         </div>
 
         <div class="statistic__circle">
-          <div class="statistic__tags-wrap visually-hidden">
+          <div class="statistic__tags-wrap">
             <canvas class="statistic__tags" width="400" height="300"></canvas>
           </div>
-          <div class="statistic__colors-wrap visually-hidden">
+          <div class="statistic__colors-wrap">
             <canvas class="statistic__colors" width="400" height="300"></canvas>
           </div>
         </div>

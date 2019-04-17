@@ -2,7 +2,7 @@ import Container from './container/container-concreter';
 import getLabelConcrete from './label/label-concreter';
 
 // Filters with ready state
-export default (filters, container) => {
+export default (container) => {
   const filterContainer = new Container();
 
   container.insertAdjacentElement(`afterend`, filterContainer.render());
