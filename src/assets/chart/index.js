@@ -1,14 +1,14 @@
 import Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels';
 
-export const daysChart = (canvasContainer) => {
+export const daysChart = (canvasContainer, daysArray, daysCountArray) => {
   return new Chart(canvasContainer, {
     plugins: [ChartDataLabels],
     type: `line`,
     data: {
-      labels: [`01 FEB`, `02 FEB`, `03 FEB`, `04 FEB`, `05 FEB`, `06 FEB`, `07 FEB`],
+      labels: daysArray,
       datasets: [{
-        data: [4, 6, 3, 1, 5, 2, 0],
+        data: daysCountArray,
         backgroundColor: `transparent`,
         borderColor: `#000000`,
         borderWidth: 1,

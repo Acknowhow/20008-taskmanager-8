@@ -8,28 +8,27 @@ export const getRandomIntInclusive = (min, max) => {
 };
 
 export const getCurrentWeekDays = () => {
-  const weekStart = moment().startOf('week');
-  const weekEnd = moment().endOf('week').add(1, 'millisecond');
+  const weekStart = moment().startOf(`week`);
+  const weekEnd = moment().endOf(`week`).add(1, `millisecond`);
 
-  const days = weekEnd.diff(weekStart, 'days');
+  const days = weekEnd.diff(weekStart, `days`);
   const array = [];
 
   for (let i = 1; i <= days; i++) {
-    array.push(weekStart.day(i).format('YYYY-MM-DD'));
+    array.push(weekStart.day(i).format(`YYYY-MM-DD`));
   }
   return array;
 };
 
 export const getDays = (dateStart, dateEnd) => {
-  const dateStartDay = moment(dateStart).startOf('day');
-  const dateEndDay = moment(dateEnd).endOf('day')
-    .add(1, 'millisecond');
-  const days = dateEndDay.diff(dateStartDay, 'days');
+  const dateStartDay = moment(dateStart).startOf(`day`);
+  const dateEndDay = moment(dateEnd).endOf(`day`).add(1, `millisecond`);
+  const days = dateEndDay.diff(dateStartDay, `days`);
 
   const array = [];
 
   for (let i = 1; i <= days; i++) {
-    array.push(dateStartDay.day(i).format('YYYY-MM-DD'));
+    array.push(dateStartDay.day(i).format(`YYYY-MM-DD`));
   }
 
   return array;
@@ -40,13 +39,13 @@ export const getDailyTasks = (days, tasks) => {
   days.map((day) => {
 
     tasks.map((task) => {
-      const startOfDay = moment(day).startOf('day').format('x');
-      const endOfDay = moment(day).endOf('day').format('x');
+      const startOfDay = moment(day).startOf(`day`).format(`x`);
+      const endOfDay = moment(day).endOf(`day`).format(`x`);
 
       if (task.dueDate >= startOfDay && task.dueDate <= endOfDay) {
-        array.push(moment(task.dueDate).format('YYYY-MM-DD'))
+        array.push(moment(task.dueDate).format(`MMM-D`));
       }
-    })
+    });
   });
   return array;
 };
@@ -62,10 +61,8 @@ export const getDailyTasksCounted = (dailyTasks) => {
     }
 
     return accumulator;
-  }, {})
+  }, {});
 };
-
-
 
 export const getRandomArrayElement = (array) => {
   return array[getRandomIntInclusive(0, array.length - 1)];
@@ -81,17 +78,17 @@ const getOverdueTasks = (tasks) => {
 
 const getTodayTasks = (tasks) => {
   return tasks.filter((it) => {
-    const startOfDay = moment().startOf('day').format('x');
-    const endOfDay = moment().endOf('day').format('x');
+    const startOfDay = moment().startOf(`day`).format(`x`);
+    const endOfDay = moment().endOf(`day`).format(`x`);
 
     return it.dueDate >= startOfDay && it.dueDate <= endOfDay;
-  })
+  });
 };
 
 
 const getRepeatingTasks = (tasks) => {
   return tasks.filter((it) => {
-    return [...Object.entries(it.days)].some((rec) => rec[1])
+    return [...Object.entries(it.days)].some((rec) => rec[1]);
   });
 };
 
@@ -99,9 +96,6 @@ export const getFilteredTasks = (tasks, filterName) => {
   const filterNameToLowerCase = filterName.toLowerCase();
 
   switch (filterNameToLowerCase) {
-    case `all`:
-      return tasks;
-
     case `overdue`:
       return getOverdueTasks(tasks);
 
@@ -110,6 +104,9 @@ export const getFilteredTasks = (tasks, filterName) => {
 
     case `repeating`:
       return getRepeatingTasks(tasks);
+
+    default:
+      return tasks;
   }
 };
 
@@ -119,11 +116,6 @@ export const getFiltersState = (tasks, filters) => {
     const filterNameToLowerCase = it.name.toLowerCase();
 
     switch (filterNameToLowerCase) {
-      case `all`:
-        it.count = tasks.length;
-        it.state = it.count > 0 ? `` : false;
-        return it;
-
       case `overdue`:
         it.count = getOverdueTasks(tasks).length;
         it.state = it.count > 0 ? `` : false;
@@ -136,6 +128,11 @@ export const getFiltersState = (tasks, filters) => {
 
       case `repeating`:
         it.count = getRepeatingTasks(tasks).length;
+        it.state = it.count > 0 ? `` : false;
+        return it;
+
+      default:
+        it.count = tasks.length;
         it.state = it.count > 0 ? `` : false;
         return it;
     }

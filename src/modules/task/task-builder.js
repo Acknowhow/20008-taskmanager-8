@@ -1,18 +1,21 @@
 import flatpickr from 'flatpickr';
 import {daysChart, tagsChart, colorChart} from '../../assets/chart';
 import {tasks, filters} from '../../data';
-import {getFilteredTasks, getFiltersState} from '../../assets/handler';
+import {
+  getCurrentWeekDays,
+  getDailyTasks,
+  getFilteredTasks,
+  getFiltersState,
+  getDailyTasksCounted,
+  getDays} from '../../assets/handler';
 
 import buildFilterContainer from '../filter/container/container-builder';
-
 import bridgeTask from './task-bridge';
 
 const searchContainer = document.querySelector(
     `.main__search`);
-
 const controls = document.querySelector(
     `.control__btn-wrap`);
-
 const statistic = document.querySelector(
     `.statistic`);
 
@@ -24,13 +27,28 @@ const dateInput = statistic.querySelector(`.statistic__period-input`);
 const board = document.querySelector(`.board`);
 
 export default () => {
-  daysChart(daysCtx);
+  const getActiveTasks = () => tasks.filter((it) => it.isDeleted !== true);
+
+  const weeklyTasks = getDailyTasksCounted(
+    getDailyTasks(getCurrentWeekDays(), getActiveTasks()));
+
+  const daysInWeek = Object.keys(weeklyTasks);
+  const daysInWeekCount = Object.values(weeklyTasks);
+
+  const firstDayInWeek = daysInWeek[0];
+  const lastDayInWeek = daysInWeek[daysInWeek.length - 1];
+
+  daysChart(daysCtx, daysInWeek, daysInWeekCount);
   tagsChart(tagsCtx);
   colorChart(colorsCtx);
 
-
   flatpickr(`.statistic__period-input`, {
     altInput: true, altFormat: `j F`, dateFormat: `Y-m-d`, mode: `range` });
+
+  const dateInputPlaceholder = statistic.querySelector(
+    `.statistic__period-input.form-control`);
+
+  dateInputPlaceholder.placeholder = `${firstDayInWeek} – ${lastDayInWeek}`;
 
   dateInput.addEventListener(`change`, (e) => {
     e.stopPropagation();
@@ -40,7 +58,13 @@ export default () => {
       const dateStart = target.value.substring(0, 10);
       const dateEnd = target.value.substring(14, 24);
 
-      console.log(dateStart);
+      const dailyTasks = getDailyTasksCounted(
+        getDailyTasks(getDays(dateStart, dateEnd), getActiveTasks()));
+
+      const daysInDate = Object.keys(dailyTasks);
+      const daysInDateCount = Object.values(dailyTasks);
+
+      daysChart(daysCtx, daysInDate, daysInDateCount);
     }
   });
 
@@ -60,8 +84,6 @@ export default () => {
     }
   });
 
-  const getActiveTasks = () => tasks.filter((it) => it.isDeleted !== true);
-
   const filterContainer = buildFilterContainer(searchContainer,
     getFiltersState(getActiveTasks(), filters));
 
@@ -76,7 +98,6 @@ export default () => {
     }
 
     filterContainer.update(getFiltersState(getActiveTasks(), filters), target);
-
     bridgeTask(getFilteredTasks(getActiveTasks(), target));
   };
 };
