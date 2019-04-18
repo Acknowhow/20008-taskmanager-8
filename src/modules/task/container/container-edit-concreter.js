@@ -8,7 +8,9 @@ export default class ContainerEdit extends Component {
     this._days = days;
 
     this._onSubmit = null;
+    this._onDelete = null;
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
+    this._onDeleteButtonClick = this._onDeleteButtonClick.bind(this);
   }
 
   _processForm(formData) {
@@ -31,7 +33,6 @@ export default class ContainerEdit extends Component {
     const taskEditMapper = ContainerEdit.createMapper(entry);
 
     for (const pair of formData.entries()) {
-      console.log(pair)
       const [property, value] = pair;
 
       if (taskEditMapper[property]) {
@@ -40,6 +41,14 @@ export default class ContainerEdit extends Component {
     }
 
     return entry;
+  }
+
+  _onDeleteButtonClick(e) {
+    e.preventDefault();
+
+    if (typeof this._onDelete === `function`) {
+      this._onDelete();
+    }
   }
 
   _onSubmitButtonClick(e) {
@@ -57,6 +66,10 @@ export default class ContainerEdit extends Component {
   _isRepeated() {
     return Object.values(this._days)
       .some((it) => it === true);
+  }
+
+  set onDelete(fn) {
+    this._onDelete = fn;
   }
 
   set onSubmit(fn) {
@@ -136,12 +149,16 @@ export default class ContainerEdit extends Component {
   bind() {
     this._element.querySelector(`.card__form`)
       .addEventListener(`submit`, this._onSubmitButtonClick);
+    this._element.querySelector(`.card__delete`)
+      .addEventListener(`click`, this._onDeleteButtonClick);
   }
 
 
   unbind() {
-    this.element.querySelector(`.card__form`)
+    this._element.querySelector(`.card__form`)
       .removeEventListener(`submit`, this._onSubmitButtonClick);
+    this._element.querySelector(`.card__delete`)
+      .removeEventListener(`click`, this._onDeleteButtonClick);
   }
 
   update(data) {

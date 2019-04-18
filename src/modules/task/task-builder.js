@@ -1,89 +1,105 @@
-import {task, filters} from '../../data';
-import {manufacture, unrender, update} from '../../assets/factory';
+import flatpickr from 'flatpickr';
+import {daysChart, tagsChart, colorChart} from '../../assets/chart';
+import {tasks, filters} from '../../data';
+import {
+  getCurrentWeekDays,
+  getDailyTasks,
+  getFilteredTasks,
+  getFiltersState,
+  getDailyTasksCounted,
+  getDays} from '../../assets/handler';
 
-import Container from './container/container-concreter';
-import ContainerEdit from './container/container-edit-concreter';
-import buildFilter from '../filter/filter-builder';
+import buildFilterContainer from '../filter/container/container-builder';
+import bridgeTask from './task-bridge';
 
-import buildTitle from './title/title-builder';
-import buildDeadline from './deadline/deadline-builder';
-import buildDay from './day/day-builder';
-import buildTag from './tag/tag-builder';
-import buildPicture from './picture/picture-builder';
-import buildColor from './color/color-builder';
+const searchContainer = document.querySelector(
+    `.main__search`);
+const controls = document.querySelector(
+    `.control__btn-wrap`);
+const statistic = document.querySelector(
+    `.statistic`);
 
-const filterContainer = document.querySelector(
-    `.main__filter`);
-const tasksContainer = document.querySelector(
-    `.board__tasks`);
+const daysCtx = statistic.querySelector(`.statistic__days`);
+const tagsCtx = statistic.querySelector(`.statistic__tags`);
+const colorsCtx = statistic.querySelector(`.statistic__colors`);
+
+const dateInput = statistic.querySelector(`.statistic__period-input`);
+const board = document.querySelector(`.board`);
 
 export default () => {
-  buildFilter(filters, filterContainer);
+  const getActiveTasks = () => tasks.filter((it) => it.isDeleted !== true);
 
-  filterContainer.addEventListener(`click`, (e) => {
+  const weeklyTasks = getDailyTasksCounted(
+    getDailyTasks(getCurrentWeekDays(), getActiveTasks()));
+
+  const daysInWeek = Object.keys(weeklyTasks);
+  const daysInWeekCount = Object.values(weeklyTasks);
+
+  const firstDayInWeek = daysInWeek[0];
+  const lastDayInWeek = daysInWeek[daysInWeek.length - 1];
+
+  daysChart(daysCtx, daysInWeek, daysInWeekCount);
+  tagsChart(tagsCtx);
+  colorChart(colorsCtx);
+
+  flatpickr(`.statistic__period-input`, {
+    altInput: true, altFormat: `j F`, dateFormat: `Y-m-d`, mode: `range` });
+
+  const dateInputPlaceholder = statistic.querySelector(
+    `.statistic__period-input.form-control`);
+
+  dateInputPlaceholder.placeholder = `${firstDayInWeek} – ${lastDayInWeek}`;
+
+  dateInput.addEventListener(`change`, (e) => {
+    e.stopPropagation();
+    const {target} = e;
+
+    if (target.value.length > 10) {
+      const dateStart = target.value.substring(0, 10);
+      const dateEnd = target.value.substring(14, 24);
+
+      const dailyTasks = getDailyTasksCounted(
+        getDailyTasks(getDays(dateStart, dateEnd), getActiveTasks()));
+
+      const daysInDate = Object.keys(dailyTasks);
+      const daysInDateCount = Object.values(dailyTasks);
+
+      daysChart(daysCtx, daysInDate, daysInDateCount);
+    }
+  });
+
+  controls.addEventListener(`click`, (e) => {
     const {target} = e;
 
     if (target.tagName.toUpperCase() === `LABEL`) {
-      let producedTaskBuilders = [];
-      let producedTaskEditBuilders = [];
+      const controlValue = target.attributes[`for`].nodeValue;
+      if (controlValue === `control__statistic`) {
 
-      const {color, days} = task;
+        statistic.classList.remove(`visually-hidden`);
+        board.classList.add(`visually-hidden`);
+      } else if (!statistic.classList.contains(`visually-hidden`)) {
 
-      const container = new Container(color, days);
-      const containerEdit = new ContainerEdit(color, days);
-
-      const getContainer = () => tasksContainer.appendChild(container.render());
-
-      const taskBuilders = [
-        buildTitle, buildTag, buildPicture
-      ];
-
-      const taskEditBuilders = [
-        buildTitle, buildDeadline, buildDay, buildTag,
-        buildPicture, buildColor
-      ];
-
-      producedTaskBuilders = manufacture(task, getContainer, ...taskBuilders);
-
-      container.onEdit = () => {
-        containerEdit.render();
-
-        const getReplacedContainer = () => {
-          tasksContainer.replaceChild(containerEdit.element, container.element);
-          return containerEdit.element;
-        };
-
-        producedTaskEditBuilders = manufacture(
-            task, getReplacedContainer, ...taskEditBuilders);
-
-        unrender(...producedTaskBuilders);
-        container.unrender();
-      };
-
-      containerEdit.onSubmit = (newData) => {
-        task.title = newData.title;
-        task.days = newData.days;
-        task.color = newData.color;
-
-        update(task, ...producedTaskBuilders);
-        update(task, ...producedTaskEditBuilders);
-        container.update(task);
-        containerEdit.update(task);
-        container.render();
-
-        const getReplacedContainerEdit = () => {
-          tasksContainer.replaceChild(container.element, containerEdit.element);
-          return container.element;
-        };
-
-        producedTaskBuilders = manufacture(
-            task, getReplacedContainerEdit, ...taskBuilders);
-
-        unrender(...producedTaskEditBuilders);
-        containerEdit.unrender();
-      };
+        statistic.classList.add(`visually-hidden`);
+      }
     }
   });
+
+  const filterContainer = buildFilterContainer(searchContainer,
+    getFiltersState(getActiveTasks(), filters));
+
+  filterContainer.onFilter = (target) => {
+
+    if (board.classList.contains(`visually-hidden`)) {
+      board.classList.remove(`visually-hidden`);
+    }
+
+    if (!statistic.classList.contains(`visually-hidden`)) {
+      statistic.classList.add(`visually-hidden`);
+    }
+
+    filterContainer.update(getFiltersState(getActiveTasks(), filters), target);
+    bridgeTask(getFilteredTasks(getActiveTasks(), target));
+  };
 };
 
 

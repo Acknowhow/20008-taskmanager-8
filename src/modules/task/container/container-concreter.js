@@ -95,6 +95,7 @@ export default class Container extends Component {
       .removeEventListener(`click`, this._onEditButtonClick);
   }
 
+
   update(data) {
     this._days = data.days;
     this._color = data.color;

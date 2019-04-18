@@ -38,13 +38,15 @@ export default class Day extends Component {
 
   get template() {
     return `
-      <button class="card__repeat-toggle" type="button">
-        repeat:<span class="card__repeat-status">${this._state.isRepeated ? `yes` : `no`}</span>
-      </button>
-                                            
-      <fieldset class="card__repeat-days" ${!this._state.isRepeated && `disabled`}>
-        <div class="card__repeat-days-inner">${this._getDays().join(``)}</div>
-      </fieldset>`;
+      <div>
+        <button class="card__repeat-toggle" type="button">
+          repeat:<span class="card__repeat-status">${this._state.isRepeated ? `yes` : `no`}</span>
+        </button>
+                                              
+        <fieldset class="card__repeat-days" ${!this._state.isRepeated && `disabled`}>
+          <div class="card__repeat-days-inner">${this._getDays().join(``)}</div>
+        </fieldset>
+      </div>`;
   }
 
   bind() {
