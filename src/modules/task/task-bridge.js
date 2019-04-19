@@ -26,10 +26,10 @@ export default (filteredTasks) => {
       let producedTaskBuilders = [];
       let producedTaskEditBuilders = [];
 
-      const {color, days} = task;
+      const {color, repeatingDays} = task;
 
-      const container = new Container(color, days);
-      const containerEdit = new ContainerEdit(color, days);
+      const container = new Container(color, repeatingDays);
+      const containerEdit = new ContainerEdit(color, repeatingDays);
 
       const getContainer = () =>
         tasksContainer.appendChild(container.render());
@@ -67,6 +67,7 @@ export default (filteredTasks) => {
       };
 
       containerEdit.onSubmit = (newData) => {
+
         task.title = newData.title;
         task.days = newData.days;
         task.color = newData.color;

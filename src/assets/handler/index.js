@@ -1,5 +1,17 @@
 import moment from 'moment';
 
+export const checkStatus = (response) => {
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  } else {
+    throw new Error(`${response.status}: ${response.statusText}`);
+  }
+};
+
+export const toJSON = (response) => {
+  return response.json();
+};
+
 export const getRandomIntInclusive = (min, max) => {
   const minCeil = Math.ceil(min);
   const maxFloor = Math.floor(max);
@@ -88,7 +100,7 @@ const getTodayTasks = (tasks) => {
 
 const getRepeatingTasks = (tasks) => {
   return tasks.filter((it) => {
-    return [...Object.entries(it.days)].some((rec) => rec[1]);
+    return [...Object.entries(it.repeatingDays)].some((rec) => rec[1]);
   });
 };
 
