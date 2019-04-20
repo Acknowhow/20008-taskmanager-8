@@ -32,19 +32,25 @@ export const error = (method) => {
   }
 };
 
-export const load = (newTask) => {
+export const load = (isSuccess) => {
   return new Promise((resolve, reject) => {
-    setTimeout(newTask ? resolve(newTask) : reject, 2000)
-  })
+    setTimeout(isSuccess ? resolve : reject, 2000)
+  });
 };
 
-export const block = (component) => {
-  component.element.querySelector(`.card__save`).disabled = true;
+export const block = (component, selector, message) => {
+  const button = component.element.querySelector(`${selector}`);
+  component.element.querySelector(`.card__inner`).style.border = `1px solid #DC143C`;
+  button.innerHTML = `${message}`;
+  button.disabled = true;
   component.element.querySelector(`.card__text`).disabled = true;
 };
 
-export const unblock = (component) => {
-  component.element.querySelector(`.card__save`).disabled = false;
+export const unblock = (component, selector, message) => {
+  const button = component.element.querySelector(`${selector}`);
+  component.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
+  button.innerHTML = `${message}`;
+  button.disabled = false;
   component.element.querySelector(`.card__text`).disabled = false;
 };
 

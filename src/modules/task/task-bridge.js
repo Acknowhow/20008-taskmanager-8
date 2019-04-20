@@ -69,11 +69,24 @@ export default (filteredTasks, Api) => {
       containerEdit.onDelete = () => {
 
         const stopLoader = loader();
+
+        block(containerEdit, `.card__delete`,`Deleting...`);
+
         Api.deleteTask(task.id)
+          .then((result) => load(result))
+          .then(() => {
+            unblock(containerEdit, `.card__delete`,`Delete`);
+            containerEdit.unrender();
+          })
+
           .then(() => Api.getTasks())
           .then((tasks) => renderTasks(tasks))
           .then(stopLoader)
-          .catch(alert);
+          .catch(() => {
+
+            containerEdit.shake();
+            unblock(containerEdit, `.card__delete`,`Delete`);
+          });
 
       };
 
@@ -92,12 +105,12 @@ export default (filteredTasks, Api) => {
         task.tags = newData.tags;
         task.repeatingDays = newData.repeatingDays;
 
-        block(containerEdit);
+        block(containerEdit, `.card__save`,`Saving...`);
 
         Api.updateTask({id: task.id, data: task.toRAW()})
-          .then((newTask) => load(newTask))
+          .then((result) => load(result))
           .then(() => {
-            unblock(containerEdit);
+            unblock(containerEdit, `.card__save`,`Save`);
             update(task, ...producedTaskBuilders);
             update(task, ...producedTaskEditBuilders);
             container.update(task);
@@ -113,12 +126,12 @@ export default (filteredTasks, Api) => {
               task, getReplacedContainerEdit, task.id, ...taskBuilders);
 
             unrender(...producedTaskEditBuilders);
-            containerEdit.unrender();
+            containerEdit.unrender()
           })
           .catch(() => {
 
             containerEdit.shake();
-            unblock(containerEdit)
+            unblock(containerEdit, `.card__save`,`Save`);
           });
       };
     }
