@@ -2,10 +2,10 @@ import Component from '../../../assets/concreter';
 import {Color} from '../../../data';
 
 export default class ContainerEdit extends Component {
-  constructor(color, days) {
+  constructor(color, repeatingDays) {
     super();
     this._color = color;
-    this._days = days;
+    this._repeatingDays = repeatingDays;
 
     this._onSubmit = null;
     this._onDelete = null;
@@ -18,8 +18,9 @@ export default class ContainerEdit extends Component {
       title: ``,
       color: ``,
       tags: new Set(),
-      dueDate: new Date(),
-      days: {
+      date: false,
+      time: false,
+      repeatingDays: {
         'mo': false,
         'tu': false,
         'we': false,
@@ -64,7 +65,7 @@ export default class ContainerEdit extends Component {
   }
 
   _isRepeated() {
-    return Object.values(this._days)
+    return Object.values(this._repeatingDays)
       .some((it) => it === true);
   }
 
@@ -163,7 +164,7 @@ export default class ContainerEdit extends Component {
 
   update(data) {
     this._color = data.color;
-    this._days = data.days;
+    this._repeatingDays = data.repeatingDays;
   }
 
   static createMapper(target) {
@@ -171,8 +172,15 @@ export default class ContainerEdit extends Component {
       hashtag: (value) => target.tags.add(value),
       text: (value) => target.title = value,
       color: (value) => target.color = value,
-      repeat: (value) => target.days[value] = true,
-      date: (value) => target.dueDate = value,
+      repeat: (value) => target.repeatingDays[value] = true,
+      date: (value) => {
+        target.date = value !== `` ? value : false;
+        return target.date;
+      },
+      time: (value) => {
+        target.time = value !== `` ? value: false;
+        return target.time;
+      }
     }
   }
 }

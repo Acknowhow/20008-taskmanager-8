@@ -30,7 +30,7 @@ const colorsCtx = statistic.querySelector(`.statistic__colors`);
 const dateInput = statistic.querySelector(`.statistic__period-input`);
 const board = document.querySelector(`.board`);
 
-const AUTHORIZATION = `Basic dXNlckBwYXNzd29yZAo1=ad}`;
+const AUTHORIZATION = `Basic dXNlckBwYXNzd29yZAosdf1=ad}`;
 const END_POINT = `https://es8-demo-srv.appspot.com/task-manager`;
 
 const Api = new API({endPoint: END_POINT, authorization: AUTHORIZATION});
@@ -111,8 +111,8 @@ export default () => {
           .then((updatedTasks) => {
             const filterInputs = [...main.querySelectorAll(`input[name='filter']`)];
             const currentFilterInput = main.querySelector(`#filter__${target}`);
-            // clearFilterInput(filterInputs);
-            // console.log(currentFilterInput);
+            clearFilterInput(filterInputs);
+
 
             filterContainer.update(getFiltersState(updatedTasks, filters, target));
             currentFilterInput.setAttribute(`checked`, `checked`);

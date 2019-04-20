@@ -37,6 +37,7 @@ export default class Container extends Component {
           class="filter__input visually-hidden"
           name="filter"
           ${it.state || ``}
+          ${it.count > 0 ? `` : `disabled`}
         />
         <label for="filter__${nameToLowerCase}" class="filter__label">
           ${it.name.toUpperCase()} <span class="filter__all-count">${it.count}</span></label

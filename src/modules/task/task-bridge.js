@@ -1,5 +1,6 @@
 import API from '../../api'
 import {manufacture, unrender, update} from '../../assets/factory';
+import {updateDueDate} from '../../assets/handler';
 
 import Container from './container/container-concreter';
 import ContainerEdit from './container/container-edit-concreter';
@@ -10,16 +11,11 @@ import buildDay from './day/day-builder';
 import buildTag from './tag/tag-builder';
 import buildPicture from './picture/picture-builder';
 import buildColor from './color/color-builder';
-import {getFiltersState} from "../../assets/handler";
-import {filters} from "../../data";
+import {getFiltersState} from '../../assets/handler';
+import {filters} from '../../data';
 
 const tasksContainer = document.querySelector(
   `.board__tasks`);
-
-// const AUTHORIZATION = `Basic dXNlckBwYXNzd29yZAo=}`;
-// const END_POINT = `https://es8-demo-srv.appspot.com/task-manager`;
-//
-// const Api = new API({endPoint: END_POINT, authorization: AUTHORIZATION});
 
 export default (filteredTasks, Api) => {
 
@@ -51,7 +47,8 @@ export default (filteredTasks, Api) => {
         buildPicture, buildColor
       ];
 
-      producedTaskBuilders = manufacture(task, getContainer, i, ...taskBuilders);
+      producedTaskBuilders = manufacture(
+        task, getContainer, task.id, ...taskBuilders);
 
       container.onEdit = () => {
         containerEdit.render();
@@ -62,7 +59,7 @@ export default (filteredTasks, Api) => {
         };
 
         producedTaskEditBuilders = manufacture(
-          task, getReplacedContainer, i, ...taskEditBuilders);
+          task, getReplacedContainer, task.id, ...taskEditBuilders);
 
         unrender(...producedTaskBuilders);
         container.unrender();
@@ -78,27 +75,39 @@ export default (filteredTasks, Api) => {
       };
 
       containerEdit.onSubmit = (newData) => {
+        const currentTimestamp = task.dueDate;
+
+        task.dueDate = updateDueDate(
+          {
+            currentTimestamp,
+            newDate: newData.date,
+            newTime: newData.time
+          });
 
         task.title = newData.title;
-        task.days = newData.days;
         task.color = newData.color;
+        task.tags = newData.tags;
+        task.repeatingDays = newData.repeatingDays;
 
-        update(task, ...producedTaskBuilders);
-        update(task, ...producedTaskEditBuilders);
-        container.update(task);
-        containerEdit.update(task);
-        container.render();
+        Api.updateTask({id: task.id, data: task.toRAW()})
+          .then((newTask) => {
+            update(newTask, ...producedTaskBuilders);
+            update(newTask, ...producedTaskEditBuilders);
+            container.update(newTask);
+            containerEdit.update(newTask);
+            container.render();
 
-        const getReplacedContainerEdit = () => {
-          tasksContainer.replaceChild(container.element, containerEdit.element);
-          return container.element;
-        };
+            const getReplacedContainerEdit = () => {
+              tasksContainer.replaceChild(container.element, containerEdit.element);
+              return container.element;
+            };
 
-        producedTaskBuilders = manufacture(
-          task, getReplacedContainerEdit, i, ...taskBuilders);
+            producedTaskBuilders = manufacture(
+              newTask, getReplacedContainerEdit, newTask.id, ...taskBuilders);
 
-        unrender(...producedTaskEditBuilders);
-        containerEdit.unrender();
+            unrender(...producedTaskEditBuilders);
+            containerEdit.unrender();
+          })
       };
     }
   };

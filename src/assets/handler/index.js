@@ -19,6 +19,35 @@ export const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (maxFloor - minCeil + 1)) + minCeil;
 };
 
+export const updateDueDate = ({currentTimestamp, newDate, newTime}) => {
+
+  if (newTime && !newDate) {
+    const currentDayStart = moment(`${currentTimestamp}`, `x`).startOf(`day`);
+    const hours = +newTime.slice(0, newTime.indexOf(`:`));
+    const minutes = +newTime.slice(newTime.indexOf(`:`) + 1, newTime.length);
+
+    return currentDayStart
+      .add(hours, `hours`).add(minutes, `minutes`).valueOf();
+  }
+
+  if (newDate && !newTime) {
+    const currentDay = moment(`${currentTimestamp}`, `x`);
+    const currentTime = currentDay.format(`HH:mm`);
+    const hours = +currentTime.slice(0, currentTime.indexOf(`:`));
+    const minutes = +currentTime.slice(currentTime.indexOf(`:`) + 1, currentTime.length);
+
+    return moment(`${newDate}`, `YYYY-MM-DD`)
+      .startOf(`day`).add(hours, `hours`)
+      .add(minutes, `minutes`).valueOf();
+  }
+
+  if (newDate && newTime) {
+    return moment(`${newDate} ${newTime}`, `YYYY-MM-DD HH:mm`).valueOf();
+  }
+
+  return moment(`${currentTimestamp}`, `x`).valueOf();
+};
+
 export const getCurrentWeekDays = () => {
   const weekStart = moment().startOf(`week`);
   const weekEnd = moment().endOf(`week`).add(1, `millisecond`);
@@ -130,36 +159,40 @@ export const clearFilterInput = (filters) => {
   }
 };
 
-const getFilterState = (name, target) => {
-  if (target) {
-
+const getFilterState = (name, count, target) => {
+  if (count > 0) {
+    if (target) {
+      return name === target ? `checked` : ``;
+    } else {
+      return ``;
+    }
   }
-}
+  return false;
+};
 
 export const getFiltersState = (tasks, filters, target = null) => {
   return filters.map((it) => {
-
     const filterNameToLowerCase = it.name.toLowerCase();
 
     switch (filterNameToLowerCase) {
       case `overdue`:
         it.count = getOverdueTasks(tasks).length;
-        it.state = it.count > 0 ? `` : false;
+        it.state = getFilterState(filterNameToLowerCase, it.count, target);
         return it;
 
       case `today`:
         it.count = getTodayTasks(tasks).length;
-        it.state = it.count > 0 ? `` : false;
+        it.state = getFilterState(filterNameToLowerCase, it.count, target);
         return it;
 
       case `repeating`:
         it.count = getRepeatingTasks(tasks).length;
-        it.state = it.count > 0 ? `` : false;
+        it.state = getFilterState(filterNameToLowerCase, it.count, target);
         return it;
 
       default:
         it.count = tasks.length;
-        it.state = it.count > 0 ? `` : false;
+        it.state = getFilterState(filterNameToLowerCase, it.count, target);
         return it;
     }
   });

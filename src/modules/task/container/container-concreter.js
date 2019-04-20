@@ -2,10 +2,10 @@ import Component from '../../../assets/concreter';
 import {Color} from '../../../data';
 
 export default class Container extends Component {
-  constructor(color, days) {
+  constructor(color, repeatingDays) {
     super();
     this._color = color;
-    this._days = days;
+    this._repeatingDays = repeatingDays;
 
     this._onEdit = null;
     this._onEditButtonClick = this._onEditButtonClick.bind(this);
@@ -20,7 +20,7 @@ export default class Container extends Component {
   }
 
   _isRepeated() {
-    return Object.values(this._days)
+    return Object.values(this._repeatingDays)
       .some((it) => it === true);
   }
 
@@ -97,7 +97,7 @@ export default class Container extends Component {
 
 
   update(data) {
-    this._days = data.days;
+    this._repeatingDays = data.repeatingDays;
     this._color = data.color;
   }
 }

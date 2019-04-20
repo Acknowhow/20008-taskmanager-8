@@ -1,9 +1,9 @@
 import Component from '../../../assets/concreter';
 
 export default class Day extends Component {
-  constructor(days) {
+  constructor(repeatingDays) {
     super();
-    this._days = days;
+    this._repeatingDays = repeatingDays;
 
     this._state.isRepeated = false;
     this._onChangeRepeated = this._onChangeRepeated.bind(this);
@@ -22,7 +22,7 @@ export default class Day extends Component {
 
   _getDays() {
     const array = [];
-    for (const [key, value] of Object.entries(this._days)) {
+    for (const [key, value] of Object.entries(this._repeatingDays)) {
       array.push(`
           <input 
             class="visually-hidden card__repeat-day-input" 
@@ -60,6 +60,6 @@ export default class Day extends Component {
   }
 
   update(data) {
-    this._days = data.days;
+    this._repeatingDays = data.repeatingDays;
   }
 }
