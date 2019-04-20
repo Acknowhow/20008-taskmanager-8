@@ -1,5 +1,6 @@
 import API from '../../api'
 import {manufacture, unrender, update} from '../../assets/factory';
+import {loader, block, unblock, load} from '../../assets/util/';
 import {updateDueDate} from '../../assets/handler';
 
 import Container from './container/container-concreter';
@@ -67,9 +68,11 @@ export default (filteredTasks, Api) => {
 
       containerEdit.onDelete = () => {
 
+        const stopLoader = loader();
         Api.deleteTask(task.id)
           .then(() => Api.getTasks())
           .then((tasks) => renderTasks(tasks))
+          .then(stopLoader)
           .catch(alert);
 
       };
@@ -89,12 +92,16 @@ export default (filteredTasks, Api) => {
         task.tags = newData.tags;
         task.repeatingDays = newData.repeatingDays;
 
+        block(containerEdit);
+
         Api.updateTask({id: task.id, data: task.toRAW()})
-          .then((newTask) => {
-            update(newTask, ...producedTaskBuilders);
-            update(newTask, ...producedTaskEditBuilders);
-            container.update(newTask);
-            containerEdit.update(newTask);
+          .then((newTask) => load(newTask))
+          .then(() => {
+            unblock(containerEdit);
+            update(task, ...producedTaskBuilders);
+            update(task, ...producedTaskEditBuilders);
+            container.update(task);
+            containerEdit.update(task);
             container.render();
 
             const getReplacedContainerEdit = () => {
@@ -103,11 +110,16 @@ export default (filteredTasks, Api) => {
             };
 
             producedTaskBuilders = manufacture(
-              newTask, getReplacedContainerEdit, newTask.id, ...taskBuilders);
+              task, getReplacedContainerEdit, task.id, ...taskBuilders);
 
             unrender(...producedTaskEditBuilders);
             containerEdit.unrender();
           })
+          .catch(() => {
+
+            containerEdit.shake();
+            unblock(containerEdit)
+          });
       };
     }
   };

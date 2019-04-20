@@ -1,6 +1,7 @@
 import API from '../../api'
 import flatpickr from 'flatpickr';
 import {daysChart, tagsChart, colorChart} from '../../assets/chart';
+import {loader} from '../../assets/util/';
 import {filters} from '../../data';
 import {
   getCurrentWeekDays,
@@ -30,12 +31,14 @@ const colorsCtx = statistic.querySelector(`.statistic__colors`);
 const dateInput = statistic.querySelector(`.statistic__period-input`);
 const board = document.querySelector(`.board`);
 
-const AUTHORIZATION = `Basic dXNlckBwYXNzd29yZAosdf1=ad}`;
+const AUTHORIZATION = `Basic dXNlckBwYXNzd29yZAosdf1=${Math.random()}`;
 const END_POINT = `https://es8-demo-srv.appspot.com/task-manager`;
 
 const Api = new API({endPoint: END_POINT, authorization: AUTHORIZATION});
 
 export default () => {
+  const stopLoader = loader();
+
   Api.getTasks()
     .then((loadedTasks) => {
 
@@ -119,9 +122,11 @@ export default () => {
             // Reset all checked filters
             // Add checked attribute for input
             bridgeTask(getFilteredTasks(updatedTasks, target), Api);
-          });
+          })
+          .then(stopLoader);
       };
-    });
+    })
+    .then(stopLoader);
 };
 
 

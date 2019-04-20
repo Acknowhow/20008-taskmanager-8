@@ -1,4 +1,5 @@
 import {toJSON, checkStatus} from '../assets/handler';
+import {error} from '../assets/util';
 
 import {Method} from '../data';
 import ModelTask from '../data/model';
@@ -49,6 +50,8 @@ export default class API {
     return fetch(`${this._endPoint}/${url}`, {method, body, headers})
       .then(checkStatus)
       .catch((err) => {
+
+        error(method);
         console.error(`fetch error: ${err}`);
         throw err;
       });

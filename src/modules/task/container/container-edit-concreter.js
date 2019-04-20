@@ -167,6 +167,15 @@ export default class ContainerEdit extends Component {
     this._repeatingDays = data.repeatingDays;
   }
 
+  shake() {
+    const ANIMATION_TIMEOUT = 600;
+    this._element.style.animation = `shake ${ANIMATION_TIMEOUT / 1000}s`;
+
+    setTimeout(() => {
+      this._element.style.animation = ``
+    }, ANIMATION_TIMEOUT);
+  }
+
   static createMapper(target) {
     return {
       hashtag: (value) => target.tags.add(value),
