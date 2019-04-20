@@ -19,12 +19,11 @@ export default class Container extends Component {
 
       const filterValue = target.attributes[`for`].nodeValue;
       this._onFilter(Filter[filterValue]);
-
     }
   }
 
   _partialUpdate() {
-    this._element.innerHTML = this.template;
+    this._element.innerHTML = this._getFilters().join(``);
   }
 
   _getFilters() {

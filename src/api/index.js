@@ -37,8 +37,10 @@ export default class API {
       .then(ModelTask.parseTask);
   }
 
-  deleteTask({id}) {
-    return this._load({url: `tasks/${id}`, method: Method.DELETE});
+  deleteTask(id) {
+    return this._load({
+      url: `tasks/${id}`,
+      method: Method.DELETE});
   }
 
   _load({url, method = Method.GET, body = null, headers = new Headers()}) {

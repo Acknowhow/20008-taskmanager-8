@@ -8,16 +8,19 @@ import {
   getFilteredTasks,
   getFiltersState,
   getDailyTasksCounted,
-  getDays} from '../../assets/handler';
+  getDays,
+  clearFilterInput} from '../../assets/handler';
 
 import buildFilterContainer from '../filter/container/container-builder';
 import bridgeTask from './task-bridge';
 
-const searchContainer = document.querySelector(
+const main = document.querySelector(`.main`);
+
+const searchContainer = main.querySelector(
     `.main__search`);
-const controls = document.querySelector(
+const controls = main.querySelector(
     `.control__btn-wrap`);
-const statistic = document.querySelector(
+const statistic = main.querySelector(
     `.statistic`);
 
 const daysCtx = statistic.querySelector(`.statistic__days`);
@@ -27,7 +30,7 @@ const colorsCtx = statistic.querySelector(`.statistic__colors`);
 const dateInput = statistic.querySelector(`.statistic__period-input`);
 const board = document.querySelector(`.board`);
 
-const AUTHORIZATION = `Basic dXNlckBwYXNzd29yZAo=${Math.random()}`;
+const AUTHORIZATION = `Basic dXNlckBwYXNzd29yZAo1=ad}`;
 const END_POINT = `https://es8-demo-srv.appspot.com/task-manager`;
 
 const Api = new API({endPoint: END_POINT, authorization: AUTHORIZATION});
@@ -35,10 +38,9 @@ const Api = new API({endPoint: END_POINT, authorization: AUTHORIZATION});
 export default () => {
   Api.getTasks()
     .then((loadedTasks) => {
-      const getActiveTasks = () => loadedTasks;
 
       const weeklyTasks = getDailyTasksCounted(
-        getDailyTasks(getCurrentWeekDays(), getActiveTasks()));
+        getDailyTasks(getCurrentWeekDays(), loadedTasks));
 
       const daysInWeek = Object.keys(weeklyTasks);
       const daysInWeekCount = Object.values(weeklyTasks);
@@ -67,7 +69,7 @@ export default () => {
           const dateEnd = target.value.substring(14, 24);
 
           const dailyTasks = getDailyTasksCounted(
-            getDailyTasks(getDays(dateStart, dateEnd), getActiveTasks()));
+            getDailyTasks(getDays(dateStart, dateEnd), loadedTasks));
 
           const daysInDate = Object.keys(dailyTasks);
           const daysInDateCount = Object.values(dailyTasks);
@@ -93,7 +95,7 @@ export default () => {
       });
 
       const filterContainer = buildFilterContainer(searchContainer,
-        getFiltersState(getActiveTasks(), filters));
+        getFiltersState(loadedTasks, filters));
 
       filterContainer.onFilter = (target) => {
 
@@ -105,11 +107,20 @@ export default () => {
           statistic.classList.add(`visually-hidden`);
         }
 
-        filterContainer.update(getFiltersState(getActiveTasks(), filters), target);
-        bridgeTask(getFilteredTasks(getActiveTasks(), target));
+        Api.getTasks()
+          .then((updatedTasks) => {
+            const filterInputs = [...main.querySelectorAll(`input[name='filter']`)];
+            const currentFilterInput = main.querySelector(`#filter__${target}`);
+            // clearFilterInput(filterInputs);
+            // console.log(currentFilterInput);
+
+            filterContainer.update(getFiltersState(updatedTasks, filters, target));
+            currentFilterInput.setAttribute(`checked`, `checked`);
+            // Reset all checked filters
+            // Add checked attribute for input
+            bridgeTask(getFilteredTasks(updatedTasks, target), Api);
+          });
       };
-
-
     });
 };
 

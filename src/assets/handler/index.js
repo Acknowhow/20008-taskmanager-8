@@ -122,7 +122,21 @@ export const getFilteredTasks = (tasks, filterName) => {
   }
 };
 
-export const getFiltersState = (tasks, filters) => {
+export const clearFilterInput = (filters) => {
+  for (const filter of filters) {
+    if (filter.hasAttribute(`checked`)) {
+      filter.removeAttribute(`checked`);
+    }
+  }
+};
+
+const getFilterState = (name, target) => {
+  if (target) {
+
+  }
+}
+
+export const getFiltersState = (tasks, filters, target = null) => {
   return filters.map((it) => {
 
     const filterNameToLowerCase = it.name.toLowerCase();
