@@ -18,22 +18,22 @@ export default class API {
 
   createTask({task}) {
     return this._load({
-        url: `tasks`,
-        method: Method.POST,
-        body: JSON.stringify(task),
-        headers: new Headers({'Content-Type': `application/json`})
-      })
+      url: `tasks`,
+      method: Method.POST,
+      body: JSON.stringify(task),
+      headers: new Headers({'Content-Type': `application/json`})
+    })
       .then(toJSON)
       .then(ModelTask.parseTask);
   }
 
   updateTask({id, data}) {
     return this._load({
-        url: `tasks/${id}`,
-        method: Method.PUT,
-        body: JSON.stringify(data),
-        headers: new Headers({'Content-Type': `application/json`})
-      })
+      url: `tasks/${id}`,
+      method: Method.PUT,
+      body: JSON.stringify(data),
+      headers: new Headers({'Content-Type': `application/json`})
+    })
       .then(toJSON)
       .then(ModelTask.parseTask);
   }
@@ -41,7 +41,8 @@ export default class API {
   deleteTask(id) {
     return this._load({
       url: `tasks/${id}`,
-      method: Method.DELETE});
+      method: Method.DELETE
+    });
   }
 
   _load({url, method = Method.GET, body = null, headers = new Headers()}) {
@@ -52,8 +53,8 @@ export default class API {
       .catch((err) => {
 
         error(method);
-        console.error(`fetch error: ${err}`);
+
         throw err;
       });
   }
-};
+}
